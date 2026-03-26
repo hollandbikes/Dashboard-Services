@@ -8,39 +8,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@300;400;600;700&display=swap');
-        
         :root { --hb-blue: #003366; --hb-orange: #E65A28; --hb-light-blue: #f0f4f8; }
-        
         body { font-family: 'Inter', sans-serif; background-color: var(--hb-light-blue); color: #1a202c; scroll-behavior: smooth; }
         h1, h2, h3 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
-        
-        /* Navigation */
-        .sidebar { width: 320px; background: var(--hb-blue); position: fixed; height: 100vh; overflow-y: auto; z-index: 50; transition: all 0.3s; }
+        .sidebar { width: 320px; background: var(--hb-blue); position: fixed; height: 100vh; overflow-y: auto; z-index: 50; }
         .nav-link { padding: 14px 24px; display: flex; align-items: center; color: rgba(255,255,255,0.7); border-left: 4px solid transparent; transition: 0.2s; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
         .nav-link:hover { background: rgba(255,255,255,0.05); color: white; }
         .nav-link.active { background: rgba(255,255,255,0.1); color: var(--hb-orange); border-left-color: var(--hb-orange); }
-        
-        /* Layout */
         .main-content { margin-left: 320px; padding: 40px; max-width: 1200px; }
-        .section-page { display: none; animation: fadeIn 0.4s ease-out; }
-        .section-page.active { display: block; }
-        
+        .section-page { display: none; }
+        .section-page.active { display: block; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Components */
         .card { background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,51,102,0.08); padding: 32px; margin-bottom: 30px; border: 1px solid rgba(0,0,0,0.05); }
-        .badge-orange { background: var(--hb-orange); color: white; padding: 2px 10px; border-radius: 99px; font-size: 0.7rem; font-weight: 800; }
-        .step-pill { background: var(--hb-blue); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 12px; font-size: 0.8rem; }
-        
         .proc-box { background: #f8fafc; border-radius: 12px; padding: 20px; border-left: 5px solid var(--hb-blue); margin: 15px 0; }
         .highlight { color: var(--hb-orange); font-weight: 700; }
-        
         table { width: 100%; border-collapse: collapse; margin: 20px 0; }
         th { background: #f1f5f9; text-align: left; padding: 12px; font-size: 0.8rem; text-transform: uppercase; color: var(--hb-blue); }
         td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
-        
-        /* Tools Area */
-        .tool-zone { background: linear-gradient(135deg, #003366 0%, #001a33 100%); color: white; border-radius: 20px; padding: 30px; }
+        .img-container { background: white; padding: 10px; border: 1px solid #eee; border-radius: 10px; margin: 20px 0; }
+        .img-container img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
     </style>
 </head>
 <body>
@@ -48,369 +34,183 @@
     <aside class="sidebar shadow-2xl">
         <div class="p-8 border-b border-white/10 mb-4">
             <img src="Logo HB_v1_Bleu.jpg" alt="Holland Bikes" class="w-44 mb-2 bg-white p-2 rounded-lg">
-            <p class="text-[10px] text-blue-300 tracking-[0.2em] font-bold uppercase">Base de Connaissances v2.5</p>
+            <p class="text-[10px] text-blue-300 tracking-[0.2em] font-bold uppercase">Guide des Services v1.0</p>
         </div>
-        
         <nav>
-            <p class="px-8 py-2 text-[11px] text-white/40 uppercase font-black tracking-widest">Financement</p>
-            <div class="nav-link active" onclick="showTab('lld')"><i class="fas fa-file-contract mr-3 w-5"></i> 1. LLD GreenLeaze <span class="ml-auto badge-orange">MAJ</span></div>
-            
-            <p class="px-8 py-2 mt-4 text-[11px] text-white/40 uppercase font-black tracking-widest">Atelier & Services</p>
+            <div class="nav-link active" onclick="showTab('lld')"><i class="fas fa-file-contract mr-3 w-5"></i> 1. LLD GreenLeaze</div>
             <div class="nav-link" onclick="showTab('abo')"><i class="fas fa-tools mr-3 w-5"></i> 2. Abonnement Entretien</div>
-            <div class="nav-link" onclick="showTab('assu')"><i class="fas fa-shield-alt mr-3 w-5"></i> 3. Assurances Laka</div>
-            
-            <p class="px-8 py-2 mt-4 text-[11px] text-white/40 uppercase font-black tracking-widest">Business & Logistique</p>
-            <div class="nav-link" onclick="showTab('part')"><i class="fas fa-handshake mr-3 w-5"></i> 4. Partenaires Mobilité</div>
-            <div class="nav-link" onclick="showTab('rep')"><i class="fas fa-sync-alt mr-3 w-5"></i> 5. Reprises Vélos</div>
-            <div class="nav-link" onclick="showTab('cc')"><i class="fas fa-store mr-3 w-5"></i> 6. Click & Collect / Véligo</div>
-            
-            <p class="px-8 py-2 mt-4 text-[11px] text-white/40 uppercase font-black tracking-widest">Vente</p>
-            <div class="nav-link" onclick="showTab('script')"><i class="fas fa-comment-dots mr-3 w-5"></i> 7. Scripts de Vente</div>
+            <div class="nav-link" onclick="showTab('assu')"><i class="fas fa-shield-alt mr-3 w-5"></i> 3. Assurance</div>
+            <div class="nav-link" onclick="showTab('part')"><i class="fas fa-handshake mr-3 w-5"></i> 4. Ventes via Partenaires</div>
+            <div class="nav-link" onclick="showTab('rep')"><i class="fas fa-sync-alt mr-3 w-5"></i> 5. Reprises Vélo</div>
         </nav>
-
-        <div class="absolute bottom-0 w-full p-6 bg-black/20 text-[10px] text-white/50">
-            Dernière mise à jour : Octobre 2025<br>Usage interne uniquement.
-        </div>
     </aside>
 
     <main class="main-content">
 
         <section id="lld" class="section-page active">
-            <h2 class="text-3xl font-black mb-2 text-slate-800">Location Longue Durée (LLD)</h2>
-            <p class="text-slate-500 mb-8 italic">Prestataire : GreenLeaze (Remplace MyPangee depuis Sept. 2025)</p>
+            <h2 class="text-3xl font-black mb-6 text-slate-800">1. Location Longue Durée (LLD)</h2>
+            <div class="card">
+                <h3 class="text-xl font-bold text-hb-blue mb-4">1.1 GreenLeaze</h3>
+                <p class="mb-4">GreenLeaze est notre prestataire pour la LLD. GreenLeaze nous achète le vélo et le loue au client pour un prix mensuel prédéfini. Le contrat est entre le client et GreenLeaze. Ce système remplace MyPangee.</p>
+                
+                <h4 class="font-bold text-hb-orange mt-6 mb-2">Avantages pour le client :</h4>
+                <ul class="list-disc ml-6 space-y-2 mb-6">
+                    <li>Accessibilité (paiements mensuels).</li>
+                    <li>Sérénité (service tout compris).</li>
+                    <li>Possibilité de changer de vélo régulièrement.</li>
+                </ul>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div class="card">
-                    <h3 class="text-lg mb-4 text-hb-blue font-bold">Pourquoi la LLD ? [cite: 1, 2]</h3>
-                    <ul class="space-y-3 text-sm">
-                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> <strong>Pas d'apport :</strong> Rouler sur du haut de gamme sans sortir 4000€. [cite: 3]</li>
-                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> <strong>Zéro décote :</strong> Le client ne gère pas la revente. [cite: 5, 10]</li>
-                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> <strong>Tout inclus :</strong> Assurance Vol/Casse incluse d'office. [cite: 6]</li>
-                        <li><i class="fas fa-check-circle text-green-500 mr-2"></i> <strong>Renouvellement :</strong> Vélo neuf tous les 12, 24 ou 36 mois. [cite: 3, 4]</li>
-                    </ul>
-                </div>
-                <div class="card border-t-4 border-hb-orange">
-                    <h3 class="text-lg mb-4 text-hb-orange font-bold">Bonus Vendeur : 2% [cite: 16, 18]</h3>
-                    <p class="text-sm leading-relaxed">
-                        Commission fixée à <span class="highlight text-lg">2% des loyers HT</span> sur toute la durée du contrat. <br><br>
-                        <strong>Optimisation :</strong> 
-                        <br>+ Accessoires (sacoches, antivol) inclus = Hausse du loyer = Hausse commission. [cite: 17, 19]
-                        <br>+ Durée 36 mois > 24 mois. [cite: 20]
-                    </p>
-                </div>
+                <h4 class="font-bold text-hb-blue mt-6 mb-2">Forfait révision mensuel (Option) :</h4>
+                <p class="text-sm mb-2 italic">Ces montants ne sont pas intégrés dans le loyer de base de GreenLeaze. L’atelier doit facturer cette prestation séparément à GreenLeaze.</p>
+                <ul class="grid grid-cols-3 gap-4">
+                    <li class="bg-slate-50 p-4 rounded-lg border text-center"><strong>Musculaire :</strong> 6,50€/mois</li>
+                    <li class="bg-slate-50 p-4 rounded-lg border text-center"><strong>Électrique :</strong> 8,00€/mois</li>
+                    <li class="bg-slate-50 p-4 rounded-lg border text-center"><strong>Cargo :</strong> 10,50€/mois</li>
+                </ul>
             </div>
 
             <div class="card">
-                <h3 class="text-lg mb-6 font-bold uppercase"><i class="fas fa-terminal mr-2"></i> Procédure Opérationnelle (Dashboard) [cite: 373]</h3>
-                <div class="space-y-6">
-                    <div class="flex items-start">
-                        <span class="step-pill">1</span>
-                        <div>
-                            <p class="font-bold text-slate-800">Simulation & Devis</p>
-                            <p class="text-sm text-slate-600">Saisissez le montant <strong>TTC Total</strong> (Vélo + Accessoires + Écopart). [cite: 374]</p>
-                        </div>
+                <h3 class="text-lg font-bold mb-4">Procédure de vente Magasin</h3>
+                <div class="space-y-4">
+                    <div class="proc-box">
+                        <p><strong>1. Création de la simulation :</strong> Saisir le montant TTC (Vélo + Accessoires + Éco-part). Choisir la durée (12, 24 ou 36 mois) et ajouter l'entretien si besoin.</p>
                     </div>
-                    <div class="flex items-start">
-                        <span class="step-pill">2</span>
-                        <div>
-                            <p class="font-bold text-slate-800">Souscription Open-Banking [cite: 364]</p>
-                            <p class="text-sm text-slate-600">Plus de fiches de paie. Le client connecte sa banque via le lien reçu par SMS/Email (~5 min). [cite: 369, 376]</p>
-                        </div>
+                    <div class="proc-box">
+                        <p><strong>2. Saisie des informations client :</strong> Remplir les coordonnées de l’utilisateur. Le client reçoit un lien par email/SMS pour valider son dossier via l'open banking.</p>
                     </div>
-                    <div class="flex items-start">
-                        <span class="step-pill">3</span>
-                        <div>
-                            <p class="font-bold text-slate-800">Livraison Cruciale [cite: 379]</p>
-                            <p class="text-sm text-slate-600">Dès le statut "Signé", cliquez impérativement sur <span class="highlight">"Livrer le matériel"</span> pour déclencher le paiement magasin. [cite: 379, 381]</p>
-                        </div>
+                    <div class="proc-box">
+                        <p><strong>3. Livraison du matériel :</strong> Une fois le statut "Signé", cliquer sur <span class="highlight">"Livrer le matériel"</span> sur le dashboard GreenLeaze pour déclencher le paiement.</p>
                     </div>
                 </div>
             </div>
 
             <div class="card bg-slate-800 text-white">
-                <h3 class="text-lg mb-4 font-bold text-orange-400">Facturation CycleSoftware [cite: 381, 382]</h3>
-                <div class="grid grid-cols-2 gap-8 text-sm">
-                    <div>
-                        <p class="text-blue-300 uppercase text-[10px] font-black mb-2 tracking-widest">Adresse de Facturation [cite: 382]</p>
-                        <p class="font-mono">Greenleaze SAS<br>21 bd de Beauséjour<br>75016 Paris<br>RCS : 984 942 573</p>
-                    </div>
-                    <div>
-                        <p class="text-blue-300 uppercase text-[10px] font-black mb-2 tracking-widest">Calcul Commission (Ligne séparée) [cite: 384]</p>
-                        <p class="p-3 bg-white/10 rounded font-mono text-orange-200">
-                            Montant = Durée (mois) x 2% x (loyer TTC / 1.2)
-                        </p>
-                    </div>
+                <h3 class="text-lg font-bold text-orange-400 mb-4">Facturation CycleSoftware</h3>
+                <p class="mb-2"><strong>Facturer à :</strong> Greenleaze SAS, 21 boulevard de Beauséjour, 75016, Paris (RCS Paris 984942573).</p>
+                <p class="mb-4 font-bold text-blue-300">Mentions obligatoires sur la facture :</p>
+                <ul class="text-sm space-y-1 mb-6">
+                    <li>Modèle du vélo et prix TTC.</li>
+                    <li>N° Vélopass.</li>
+                    <li>Accessoires inclus.</li>
+                </ul>
+                <div class="p-4 bg-white/10 rounded">
+                    <p class="font-bold mb-1">Ligne Commission Vendeur (2%) :</p>
+                    <p class="font-mono text-sm">Calcul = Durée (mois) × 2 % × (loyer TTC / 1,2)</p>
                 </div>
-                <p class="mt-4 text-[11px] opacity-60 italic">Note : Le Vélopass doit être enregistré au nom de GreenLeaze (identification@greenleaze.com). [cite: 13, 385]</p>
             </div>
         </section>
 
         <section id="abo" class="section-page">
-            <h2 class="text-3xl font-black mb-2 text-slate-800">Abonnement Entretien Holland Bikes</h2>
-            <p class="text-slate-500 mb-8 italic">Le service "All-Inclusive" pour cyclistes du quotidien [cite: 22]</p>
-
-            <div class="grid grid-cols-3 gap-6 mb-8">
-                <div class="tool-zone text-center">
-                    <p class="text-[10px] uppercase font-bold opacity-60">Musculaire</p>
-                    <p class="text-4xl font-black">15€<span class="text-lg">/mois</span></p>
-                </div>
-                <div class="tool-zone text-center border-2 border-orange-500">
-                    <p class="text-[10px] uppercase font-bold opacity-60">Électrique</p>
-                    <p class="text-4xl font-black">25€<span class="text-lg">/mois</span></p>
-                </div>
-                <div class="tool-zone text-center">
-                    <p class="text-[10px] uppercase font-bold opacity-60">Cargo / Longtail</p>
-                    <p class="text-4xl font-black">25€<span class="text-lg">/mois</span></p>
-                </div>
-            </div>
-
+            <h2 class="text-3xl font-black mb-6 text-slate-800">2. Abonnement Entretien</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="card">
-                    <h3 class="text-hb-blue font-bold mb-4">Ce qui est inclus [cite: 386]</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><i class="fas fa-check text-green-600 mr-2"></i> Main-d'œuvre illimitée (réparations courantes) [cite: 24, 386]</li>
-                        <li><i class="fas fa-check text-green-600 mr-2"></i> <strong>2 révisions complètes</strong> par an [cite: 24, 386]</li>
-                        <li><i class="fas fa-check text-green-600 mr-2"></i> Crevaisons illimitées (Chambres incluses) [cite: 23, 386]</li>
-                        <li><i class="fas fa-check text-green-600 mr-2"></i> Pièces d'usure : Patins, plaquettes, câbles, gaines [cite: 22, 23, 386]</li>
-                        <li><i class="fas fa-star text-orange-500 mr-2"></i> Priorité atelier (RDV sous 7 jours) [cite: 25, 386]</li>
+                    <h3 class="text-xl font-bold text-hb-blue mb-4">Tarification (TTC/mois)</h3>
+                    <table class="mb-6">
+                        <tr><td>Vélo Classique</td><td class="font-bold text-right">15,00 €</td></tr>
+                        <tr><td>Vélo Électrique</td><td class="font-bold text-right">25,00 €</td></tr>
+                        <tr><td>Vélo Cargo / Longtail</td><td class="font-bold text-right">25,00 €</td></tr>
+                    </table>
+                    <h4 class="font-bold mb-2">Prestations incluses :</h4>
+                    <ul class="text-sm space-y-2 list-disc ml-5">
+                        <li>Main-d’œuvre illimitée.</li>
+                        <li>Deux révisions par an.</li>
+                        <li>Réparation express des crevaisons (chambre à air incluse).</li>
+                        <li>Vélo de courtoisie.</li>
+                        <li>Priorité atelier (< 7j).</li>
+                        <li>Pièces d’usure (visserie, patins/plaquettes, rayons, câbles, gaines).</li>
                     </ul>
                 </div>
-                <div class="card bg-red-50 border-red-200">
-                    <h3 class="text-red-800 font-bold mb-4">Exclusions (À facturer) [cite: 26, 387]</h3>
-                    <ul class="space-y-2 text-sm text-red-700">
-                        <li><i class="fas fa-times mr-2"></i> Pièces majeures : Pneus, chaînes, cassettes, disques. [cite: 26, 39]</li>
-                        <li><i class="fas fa-times mr-2"></i> Composants : Moteurs, batteries, roues complètes. [cite: 26]</li>
-                        <li><i class="fas fa-times mr-2"></i> Speed-bikes (>25 km/h) et vélos de +10 ans. [cite: 387]</li>
-                    </ul>
+                <div class="card">
+                    <h3 class="text-xl font-bold text-hb-blue mb-4">Inscription via Stripe</h3>
+                    <p class="text-sm mb-4">Faire scanner au client le QR Code correspondant à son type de vélo.</p>
+                    <div class="img-container">
+                        <img src="QR codes abo Stripe.png" alt="QR Codes Stripe">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <img src="bouton qr code.png" alt="Bouton Stripe" class="border rounded">
+                        <img src="afficher QR code.png" alt="Affichage QR" class="border rounded">
+                    </div>
                 </div>
             </div>
-
             <div class="card">
-                <h3 class="text-hb-blue font-bold mb-4">Outil d'Argumentation : Comparatif Annuel [cite: 39]</h3>
-                <table>
-                    <thead>
-                        <tr><th>Prestation</th><th>Sans Abo (€)</th><th>Avec Abo (€)</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>2 Révisions VAE</td><td>150€</td><td>0€ (Inclus)</td></tr>
-                        <tr><td>2 Crevaisons (Pièces+MO)</td><td>50€</td><td>0€ (Inclus)</td></tr>
-                        <tr><td>Plaquettes AV+AR (Pièces+MO)</td><td>70€</td><td>0€ (Inclus)</td></tr>
-                        <tr><td>Petites pièces & Réglages</td><td>95€</td><td>0€ (Inclus)</td></tr>
-                        <tr class="bg-blue-50 font-bold"><td>TOTAL ANNUEL ESTIMÉ</td><td>560€</td><td>300€ (Abo)</td></tr>
-                    </tbody>
-                </table>
-                <p class="text-xs text-slate-500 italic text-center mt-2">Économie réelle moyenne : 260€/an + Sérénité priorité. [cite: 39]</p>
+                <h3 class="font-bold mb-4">Vérification de l'abonnement</h3>
+                <p class="text-sm mb-4">Avant d'éditer la facture atelier à 0€, vérifier la validité dans l'onglet "Clients" de Stripe.</p>
+                <div class="img-container">
+                    <img src="liste clients abonnés.png" alt="Liste Abonnés Stripe">
+                </div>
             </div>
         </section>
 
         <section id="assu" class="section-page">
-            <h2 class="text-3xl font-black mb-2 text-slate-800">Assurances Laka</h2>
-            <p class="text-slate-500 mb-8 italic">Protéger l'investissement dès le premier tour de roue [cite: 49]</p>
-
-            <div class="card bg-hb-blue text-white overflow-hidden relative">
-                <div class="absolute top-0 right-0 p-8 opacity-10"><i class="fas fa-shield-alt text-9xl"></i></div>
-                <h3 class="text-xl font-bold text-orange-400 mb-6">Calculateur d'Extension Prépayée (Option 1) [cite: 41, 43]</h3>
-                <div class="flex flex-col md:flex-row gap-6 items-end">
-                    <div class="flex-1">
-                        <label class="block text-[10px] uppercase font-black mb-2 tracking-widest text-blue-200">Valeur TTC du vélo (€)</label>
-                        <input type="number" id="bike_price" oninput="calculateInsurance()" placeholder="Ex: 3000" class="w-full bg-white/10 border border-white/20 p-4 rounded-xl text-2xl font-black outline-none focus:border-orange-500 transition-all">
-                    </div>
-                    <div class="flex-1 bg-white/5 p-4 rounded-xl border border-white/10">
-                        <p class="text-[10px] uppercase font-bold opacity-60 mb-1 text-blue-200">Pack 1 AN (7.5%) [cite: 41, 43]</p>
-                        <p id="res_1an" class="text-2xl font-black text-white">0.00 €</p>
-                    </div>
-                    <div class="flex-1 bg-orange-500/20 p-4 rounded-xl border border-orange-500/30">
-                        <p class="text-[10px] uppercase font-bold text-orange-300 mb-1">Pack 2 ANS (-20% inclus) [cite: 43]</p>
-                        <p id="res_2an" class="text-2xl font-black text-orange-400">0.00 €</p>
-                    </div>
-                </div>
-                <div class="mt-6 flex gap-4 text-[10px] uppercase font-bold">
-                    <span><i class="fas fa-check-circle text-orange-500 mr-1"></i> Franchise 10% [cite: 41, 56]</span>
-                    <span><i class="fas fa-check-circle text-orange-500 mr-1"></i> Vol + Casse Inclus [cite: 42, 56]</span>
-                    <span><i class="fas fa-check-circle text-orange-500 mr-1"></i> Commission Magasin 20% [cite: 42, 53, 56]</span>
+            <h2 class="text-3xl font-black mb-6 text-slate-800">3. Assurance</h2>
+            <div class="card">
+                <h3 class="text-xl font-bold text-hb-blue mb-4">3.1 Assurance 4 mois offerte</h3>
+                <p class="text-sm mb-4">Holland Bikes offre les 4 premiers mois d'assurance VOL. Elle couvre le vol par effraction, agression ou à l'extérieur si attaché à un point fixe avec un antivol agréé. Franchise 10% (min 50€).</p>
+                <div class="img-container">
+                    <img src="assurance.jpg" alt="Tableau Assurance">
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                <div class="card">
-                    <h3 class="text-hb-blue font-bold mb-4">L'offre "4 mois offerts" [cite: 42, 56]</h3>
-                    <p class="text-sm text-slate-600 mb-4">Activée automatiquement lors de l'achat d'un vélo neuf. [cite: 56]</p>
-                    <ul class="text-xs space-y-2">
-                        <li><strong>Garantie :</strong> Vol Uniquement. [cite: 42, 56]</li>
-                        <li><strong>Franchise :</strong> 10%. [cite: 41, 56]</li>
-                        <li><strong>Fin :</strong> Après 4 mois, devient payant mensuellement via Laka. [cite: 42]</li>
-                    </ul>
+            <div class="card">
+                <h3 class="text-xl font-bold text-hb-blue mb-4">3.2 Extension prépayée (1 ou 2 ans)</h3>
+                <p class="mb-6 text-sm">Vente directe en magasin. Le tarif est de <span class="highlight">7,5% de la valeur du vélo</span>.</p>
+                
+                <div class="bg-hb-blue p-8 rounded-xl text-white">
+                    <label class="block text-xs font-bold uppercase mb-2">Prix TTC du vélo (€)</label>
+                    <input type="number" id="price_calc" oninput="doCalc()" class="w-full p-4 rounded text-black font-bold text-xl mb-4" placeholder="Ex: 2500">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/10 p-4 rounded text-center">
+                            <p class="text-[10px] uppercase">1 AN (7.5%)</p>
+                            <p id="res1" class="text-xl font-bold text-orange-400">0.00 €</p>
+                        </div>
+                        <div class="bg-white/10 p-4 rounded text-center">
+                            <p class="text-[10px] uppercase">2 ANS (-20% remise)</p>
+                            <p id="res2" class="text-xl font-bold text-orange-400">0.00 €</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="card border-l-4 border-hb-blue">
-                    <h3 class="text-hb-blue font-bold mb-4">Option 2 : Abonnement Mensuel Laka [cite: 42, 56]</h3>
-                    <p class="text-sm text-slate-600 mb-4">Pour les clients qui veulent de la flexibilité totale. [cite: 42, 56]</p>
-                    <ul class="text-xs space-y-2">
-                        <li><strong>Franchise :</strong> <span class="highlight">0 €</span>. [cite: 42, 56]</li>
-                        <li><strong>Engagement :</strong> Résiliable chaque mois. [cite: 42, 56]</li>
-                        <li><strong>Tarif :</strong> Dynamique selon code postal et type de vélo. [cite: 43]</li>
-                        <li><strong>Commission :</strong> 10% pour Holland Bikes. [cite: 43, 53, 56]</li>
-                    </ul>
+
+                <div class="mt-8 space-y-4">
+                    <p class="text-sm"><strong>Codes CycleSoftware :</strong></p>
+                    <p class="text-xs">1 an : 2181007168585 | 2 ans : 2181007168622</p>
+                    <p class="text-xs italic text-red-600 font-bold">Important : Ne pas cocher la case "assurance" dans CycleSoftware si une extension est vendue. Ajouter les dates de couverture en remarque.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="text-xl font-bold text-hb-blue mb-4">3.3 Assurance mensuelle Laka</h3>
+                <p class="text-sm mb-6">Si le client ne prend pas d'extension, cocher la case "Assurer le vélo" dans CycleSoftware pour déclencher les emails automatisés.</p>
+                <div class="grid grid-cols-3 md:grid-cols-5 gap-2">
+                    <img src="jour de l'achat.png" alt="Email J0" class="border rounded">
+                    <img src="1 semaine après achat.png" alt="Email S1" class="border rounded">
+                    <img src="3 mois après achat.png" alt="Email M3" class="border rounded">
+                    <img src="3 mois 25 après achat.png" alt="Email M3.25" class="border rounded">
+                    <img src="4 mois après achat.png" alt="Email M4" class="border rounded">
                 </div>
             </div>
         </section>
 
         <section id="part" class="section-page">
-            <h2 class="text-3xl font-black mb-2 text-slate-800">Ventes via Partenaires Mobilité</h2>
-            <p class="text-slate-500 mb-8 italic">Leasing Entreprise et Forfaits Mobilité [cite: 57]</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150x50?text=ZENRIDE" alt="Zenride" class="h-8 mb-4">
-                    <div class="proc-box">
-                        <p class="text-xs font-bold uppercase mb-2">Processus [cite: 58]</p>
-                        <ol class="text-xs space-y-2 list-decimal ml-4">
-                            <li>Le client fournit son <strong>code Zenride</strong>. [cite: 58]</li>
-                            <li>Établir un devis au nom de Zenride via leur portail. [cite: 58]</li>
-                            <li><strong>ATTENTION :</strong> N'envoyez jamais le vélo sans le Bon de Commande (PO) validé. [cite: 58]</li>
-                            <li>Facturer le montant remisé au nom de Zenride. [cite: 58]</li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="card">
-                    <img src="https://via.placeholder.com/150x50?text=LEASE+A+BIKE" alt="Lease a Bike" class="h-8 mb-4">
-                    <div class="proc-box">
-                        <p class="text-xs font-bold uppercase mb-2">Processus [cite: 58, 59]</p>
-                        <ul class="text-xs space-y-2">
-                            <li>Vérification via <strong>email professionnel</strong> du client. [cite: 59]</li>
-                            <li>Le client bénéficie d'une option de rachat finale (souvent 20%). [cite: 58]</li>
-                            <li>Contrat standard de 36 mois avec entretien inclus. [cite: 59]</li>
-                            <li>Facturer directement à Lease a Bike. [cite: 59]</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card mt-6 bg-slate-50 border-2 border-dashed border-slate-300">
-                <h3 class="text-slate-800 font-bold mb-4"><i class="fas fa-credit-card mr-2"></i> Cartes Mobilités (Edenred, Betterway, SNCF) [cite: 60]</h3>
-                <div class="grid grid-cols-3 gap-4 text-center">
-                    <div class="p-4">
-                        <i class="fas fa-bolt text-hb-orange text-xl mb-2"></i>
-                        <p class="text-[10px] font-bold">PAIEMENT DIRECT</p>
-                        <p class="text-[10px] opacity-60">Comme une CB classique sur le TPE. [cite: 60]</p>
-                    </div>
-                    <div class="p-4 border-x border-slate-200">
-                        <i class="fas fa-file-invoice text-hb-blue text-xl mb-2"></i>
-                        <p class="text-[10px] font-bold">FACTURATION</p>
-                        <p class="text-[10px] opacity-60">Au nom du client (particulier). [cite: 61]</p>
-                    </div>
-                    <div class="p-4">
-                        <i class="fas fa-exclamation-triangle text-red-500 text-xl mb-2"></i>
-                        <p class="text-[10px] font-bold">REFUS ?</p>
-                        <p class="text-[10px] opacity-60">Souvent dû au plafond journalier de la carte. [cite: 60, 61]</p>
-                    </div>
-                </div>
+            <h2 class="text-3xl font-black mb-6 text-slate-800">4. Ventes via Partenaires</h2>
+            <div class="card">
+                <h3 class="text-lg font-bold text-hb-blue mb-2">4.1 Zenride & 4.2 Lease a Bike</h3>
+                <p class="text-sm mb-4">Le client final est la plateforme de leasing. Faire le devis au nom du partenaire. Ne pas livrer avant réception du Bon de Commande (PO).</p>
+                <h3 class="text-lg font-bold text-hb-blue mb-2">4.3 BeeToGreen</h3>
+                <p class="text-sm mb-4">Devis au nom de BeeToGreen. Facturation après validation du PO.</p>
+                <h3 class="text-lg font-bold text-hb-blue mb-2">4.4 Cartes de mobilités (Edenred, Betterway, SNCF...)</h3>
+                <p class="text-sm">Le client paie avec sa carte au TPE. Facturer au nom du client particulier.</p>
             </div>
         </section>
 
         <section id="rep" class="section-page">
-            <h2 class="text-3xl font-black mb-2 text-slate-800">Reprises Vélos en Magasin</h2>
-            <p class="text-slate-500 mb-8 italic">Accélérer la vente du neuf en reprenant l'ancien [cite: 65]</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="card border-t-4 border-green-500">
-                    <h3 class="font-bold text-green-700 mb-4">Reprises Électriques (VAE) [cite: 63, 64]</h3>
-                    <div class="space-y-4">
-                        <p class="text-xs leading-relaxed">Utilisation prioritaire du portail <strong>B2B Upway</strong>. [cite: 63, 64]</p>
-                        <div class="bg-slate-50 p-4 rounded-lg">
-                            <p class="text-[10px] font-black uppercase mb-2">Checklist Diagnostic : [cite: 62, 63]</p>
-                            <ul class="text-[10px] space-y-1">
-                                <li><i class="fas fa-check mr-1"></i> État moteur/assistance (pas de bruits). [cite: 62, 63]</li>
-                                <li><i class="fas fa-check mr-1"></i> État batterie et chargeur présent.</li>
-                                <li><i class="fas fa-check mr-1"></i> Photos précises (compteur, transmission, cadre). [cite: 63, 64]</li>
-                            </ul>
-                        </div>
-                        <p class="text-xs">Le montant de reprise est déduit immédiatement de la facture du vélo neuf. [cite: 63, 64, 65]</p>
-                    </div>
-                </div>
-                <div class="card border-t-4 border-slate-400">
-                    <h3 class="font-bold text-slate-700 mb-4">Reprises Musculaires [cite: 64]</h3>
-                    <p class="text-xs mb-4 leading-relaxed">Pas de revente à Upway. Gestion interne par le magasin ou EBSC. [cite: 64]</p>
-                    <ul class="text-xs space-y-3">
-                        <li><i class="fas fa-calculator mr-2"></i> Utiliser le <strong>Calculateur Excel Interne</strong>. [cite: 64]</li>
-                        <li><i class="fas fa-camera mr-2"></i> Envoi des photos à l'EBSC pour validation du prix. [cite: 63, 64]</li>
-                        <li><i class="fas fa-boxes mr-2"></i> Stockage en "Occasion" dans CycleSoftware. [cite: 63, 64]</li>
-                    </ul>
-                </div>
+            <h2 class="text-3xl font-black mb-6 text-slate-800">5. Reprises Vélo</h2>
+            <div class="card border-l-4 border-green-600">
+                <h3 class="text-lg font-bold text-green-700 mb-2">5.1 Reprise vélos électriques (Upway)</h3>
+                <p class="text-sm">Utiliser le portail Upway pour obtenir le tarif de reprise immédiat.</p>
             </div>
-
-            <div class="card bg-amber-50 border-amber-200 mt-6">
-                <h4 class="text-amber-800 font-black text-sm uppercase mb-2 italic">Argument Massue (Reprise) [cite: 65, 66, 67]</h4>
-                <p class="text-sm text-amber-900 leading-relaxed">
-                    "Monsieur, vendre votre vélo sur LeBonCoin prend en moyenne <strong>3 semaines et 5 visites</strong> souvent infructueuses. [cite: 66, 67] Chez Holland Bikes, on estime votre vélo en <strong>5 minutes</strong> et vous repartez avec le nouveau aujourd'hui." [cite: 65]
-                </p>
-            </div>
-        </section>
-
-        <section id="cc" class="section-page">
-            <h2 class="text-3xl font-black mb-2 text-slate-800">Click & Collect : Upway & Véligo</h2>
-            <p class="text-slate-500 mb-8 italic">Transformer un point relais en opportunité de vente [cite: 68, 69]</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="card">
-                    <h3 class="font-bold text-hb-blue mb-4">Flux Véligo Location [cite: 77, 79]</h3>
-                    <div class="proc-box text-xs">
-                        <p class="font-bold mb-2">Règles d'or : [cite: 81, 82, 83]</p>
-                        <ul class="space-y-2">
-                            <li><i class="fas fa-ban text-red-500 mr-2"></i> <strong>Aucune réparation</strong> autorisée sur les vélos Véligo. [cite: 83]</li>
-                            <li><i class="fas fa-id-card text-blue-500 mr-2"></i> Validation obligatoire en temps réel sur le <strong>Dashboard Véligo</strong>. [cite: 84]</li>
-                            <li><i class="fas fa-gift text-orange-500 mr-2"></i> Offre conversion : 1 casque + 1 antivol offerts si achat suite à Véligo. [cite: 85, 86]</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3 class="font-bold text-hb-blue mb-4">Stratégie Upway [cite: 70, 76]</h3>
-                    <p class="text-xs mb-4">Forfait déballage/mise en service : <strong>42 €</strong>. [cite: 76]</p>
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <p class="text-[10px] font-black uppercase mb-2">Objectif Conversion : [cite: 72, 73, 74]</p>
-                        <ul class="text-[10px] space-y-2">
-                            <li>1. Créer la fiche client dans CycleSoftware. [cite: 77]</li>
-                            <li>2. Proposer l'<strong>Abonnement Entretien</strong> (Indispensable sur de l'occasion). [cite: 77]</li>
-                            <li>3. Offrir une "Révision Sécurité" à 3 mois pour faire revenir le client. [cite: 77]</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="script" class="section-page">
-            <h2 class="text-3xl font-black mb-2 text-slate-800">Scripts & Argumentaires Experts</h2>
-            <p class="text-slate-500 mb-8 italic">Maîtriser le discours pour chaque profil client [cite: 1, 9, 50, 65]</p>
-
-            <div class="space-y-6">
-                <div class="card border-l-8 border-hb-blue">
-                    <div class="flex items-center mb-4">
-                        <span class="bg-hb-blue text-white px-3 py-1 rounded text-[10px] font-black mr-4 uppercase">LLD GreenLeaze [cite: 9, 10, 182]</span>
-                        <h3 class="font-bold">Le client hésite face au prix total</h3>
-                    </div>
-                    <p class="text-sm italic text-slate-600 border-l-2 border-slate-200 pl-4 py-2">
-                        "Plutôt que d'investir 4000€ d'un coup, je vous propose le vélo en 'As a Service'. [cite: 9, 182] Pour 90€ par mois, vous avez le vélo, l'assurance et l'entretien inclus. [cite: 14] Dans 3 ans, vous ne vous souciez pas de la revente ou de la batterie usée : vous nous le rendez et vous repartez sur le nouveau modèle." [cite: 5, 10]
-                    </p>
-                </div>
-
-                <div class="card border-l-8 border-hb-orange">
-                    <div class="flex items-center mb-4">
-                        <span class="bg-hb-orange text-white px-3 py-1 rounded text-[10px] font-black mr-4 uppercase">Abonnement [cite: 32, 36]</span>
-                        <h3 class="font-bold">Le client trouve l'atelier trop cher</h3>
-                    </div>
-                    <p class="text-sm italic text-slate-600 border-l-2 border-slate-200 pl-4 py-2">
-                        "Je comprends. Aujourd'hui votre facture est de 60€ pour ces freins et cette crevaison. [cite: 37] Si vous étiez abonné à 25€/mois, cette intervention vous coûterait 0€. [cite: 36, 38] C'est l'équivalent de 2 mois d'abonnement déjà rentabilisés en une seule visite." [cite: 38]
-                    </p>
-                </div>
-
-                <div class="card border-l-8 border-slate-800">
-                    <div class="flex items-center mb-4">
-                        <span class="bg-slate-800 text-white px-3 py-1 rounded text-[10px] font-black mr-4 uppercase">Assurance [cite: 44, 46, 50]</span>
-                        <h3 class="font-bold">Le client pense que son antivol suffit</h3>
-                    </div>
-                    <p class="text-sm italic text-slate-600 border-l-2 border-slate-200 pl-4 py-2">
-                        "L'antivol est nécessaire, mais 80% des vols ont lieu dans les 4 premiers mois. [cite: 46] Avec l'extension prépayée, votre investissement de 3000€ est protégé H24. [cite: 52] S'il disparaît, on vous remet en selle immédiatement avec un vélo neuf, sans délai." [cite: 47, 48, 51]
-                    </p>
-                </div>
+            <div class="card border-l-4 border-slate-400 mt-4">
+                <h3 class="text-lg font-bold text-slate-700 mb-2">5.2 Reprise vélos mécaniques</h3>
+                <p class="text-sm">Utiliser l'outil calculateur pour le tarif. Faire valider par l'EBSC avec photos avant reprise.</p>
             </div>
         </section>
 
@@ -418,38 +218,23 @@
 
     <script>
         function showTab(id) {
-            // Update Navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active');
-
-            // Update Content
-            document.querySelectorAll('.section-page').forEach(page => {
-                page.classList.remove('active');
-            });
+            document.querySelectorAll('.section-page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.getElementById(id).classList.add('active');
-
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            event.currentTarget.classList.add('active');
+            window.scrollTo(0,0);
         }
 
-        function calculateInsurance() {
-            const price = document.getElementById('bike_price').value;
-            const res1 = document.getElementById('res_1an');
-            const res2 = document.getElementById('res_2an');
-
-            if (price > 0) {
-                // 1 an : 7.5% du prix TTC [cite: 41, 43]
-                const base = price * 0.075;
-                // 2 ans : (base * 2) - 20% de remise [cite: 43]
-                const pack2 = (base * 2) * 0.8;
-
-                res1.innerText = base.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
-                res2.innerText = pack2.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+        function doCalc() {
+            let p = document.getElementById('price_calc').value;
+            if (p > 0) {
+                let a1 = p * 0.075;
+                let a2 = (p * 0.075 * 2) * 0.8;
+                document.getElementById('res1').innerText = a1.toFixed(2) + " €";
+                document.getElementById('res2').innerText = a2.toFixed(2) + " €";
             } else {
-                res1.innerText = "0.00 €";
-                res2.innerText = "0.00 €";
+                document.getElementById('res1').innerText = "0.00 €";
+                document.getElementById('res2').innerText = "0.00 €";
             }
         }
     </script>
