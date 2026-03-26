@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intranet Holland Bikes - Guide des Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --hb-blue: #003366; --hb-orange: #E65A28; }
+        .bg-hb-blue { background-color: var(--hb-blue); }
+        .active-tab { border-bottom: 4px solid var(--hb-orange); color: var(--hb-orange) !important; font-weight: bold; }
+        .page-content { display: none; animation: fadeIn 0.3s ease-in; }
+        .page-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <nav class="bg-hb-blue text-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center py-4">
+                <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                    <i class="fas fa-bicycle text-2xl text-orange-400"></i>
+                    <span class="text-xl font-black uppercase tracking-widest">Holland <span class="text-orange-500">Bikes</span></span>
+                </div>
+                
+                <div class="relative w-full md:w-96">
+                    <input type="text" id="globalSearch" onkeyup="searchGlobal()" placeholder="Rechercher un service, un lien, un prix..." 
+                           class="w-full pl-10 pr-4 py-2 rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-500 outline-none">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+
+            <div class="flex overflow-x-auto no-scrollbar space-x-6 text-sm font-medium pb-1">
+                <button onclick="showPage('home')" class="nav-link py-2 px-1 whitespace-nowrap active-tab" id="btn-home">ACCUEIL</button>
+                <button onclick="showPage('lld')" class="nav-link py-2 px-1 whitespace-nowrap" id="btn-lld">LLD (GREENLEAZE)</button>
+                <button onclick="showPage('entretien')" class="nav-link py-2 px-1 whitespace-nowrap" id="btn-entretien">ABO. ENTRETIEN</button>
+                <button onclick="showPage('assurance')" class="nav-link py-2 px-1 whitespace-nowrap" id="btn-assurance">ASSURANCE (LAKA)</button>
+                <button onclick="showPage('partenaires')" class="nav-link py-2 px-1 whitespace-nowrap" id="btn-partenaires">PARTENAIRES</button>
+                <button onclick="showPage('reprises')" class="nav-link py-2 px-1 whitespace-nowrap" id="btn-reprises">REPRISES</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto py-8 px-4">
+
+        <section id="home" class="page-content active">
+            <h2 class="text-3xl font-bold mb-6 text-hb-blue">Tableau de bord Magasins</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div onclick="showPage('lld')" class="bg-white p-6 rounded-xl shadow hover:shadow-xl cursor-pointer border-l-8 border-blue-600 transition">
+                    <h3 class="font-bold text-lg mb-2">LLD GreenLeaze</h3>
+                    <p class="text-sm text-gray-500">Gestion des dossiers de location longue durée.</p>
+                </div>
+                <div onclick="showPage('entretien')" class="bg-white p-6 rounded-xl shadow hover:shadow-xl cursor-pointer border-l-8 border-green-500 transition">
+                    <h3 class="font-bold text-lg mb-2">Abonnement Entretien</h3>
+                    <p class="text-sm text-gray-500">Mise en place Stripe et CycleSoftware.</p>
+                </div>
+                <div onclick="showPage('assurance')" class="bg-white p-6 rounded-xl shadow hover:shadow-xl cursor-pointer border-l-8 border-red-500 transition">
+                    <h3 class="font-bold text-lg mb-2">Assurances Laka</h3>
+                    <p class="text-sm text-gray-500">Activation des 4 mois et extensions.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="lld" class="page-content">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-2xl font-bold text-blue-800 mb-6 border-b pb-2">Location Longue Durée (LLD)</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-bold text-hb-orange mb-3 uppercase text-sm">Action Prioritaire</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start"><i class="fas fa-check-circle mt-1 mr-3 text-green-500"></i> Création du client sur le Dashboard GreenLeaze.</li>
+                            <li class="flex items-start"><i class="fas fa-check-circle mt-1 mr-3 text-green-500"></i> Simulation et envoi du lien de paiement.</li>
+                            <li class="flex items-start"><i class="fas fa-check-circle mt-1 mr-3 text-green-500"></i> Facturation via CycleSoftware (Mode LLD).</li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-xl">
+                        <h3 class="font-bold mb-3">Liens Utiles :</h3>
+                        <a href="https://dashboard.greenleaze.com" target="_blank" class="block bg-hb-blue text-white text-center py-3 rounded-lg font-bold hover:bg-opacity-90">Ouvrir GreenLeaze</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="entretien" class="page-content">
+            <h2 class="text-2xl font-bold text-green-700 mb-6">Abonnement Entretien</h2>
+            <div class="bg-white p-6 rounded-xl shadow">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100 uppercase text-xs">
+                                <th class="p-4 border">Service</th>
+                                <th class="p-4 border">Prix / Mois</th>
+                                <th class="p-4 border">Inclus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-4 border font-bold">Vélos Classiques</td>
+                                <td class="p-4 border font-bold text-green-600">15€</td>
+                                <td class="p-4 border text-sm italic">Entretien régulier, réglages freins/vitesses...</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 border font-bold">Vélos Électriques / Cargos</td>
+                                <td class="p-4 border font-bold text-green-600">25€</td>
+                                <td class="p-4 border text-sm italic">Mises à jour logicielles, check-up complet...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        </main>
+
+    <script>
+        // FONCTION NAVIGATION ENTRE LES PAGES
+        function showPage(pageId) {
+            // Masquer toutes les pages
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Désactiver tous les boutons
+            document.querySelectorAll('.nav-link').forEach(btn => {
+                btn.classList.remove('active-tab');
+            });
+            
+            // Afficher la page demandée
+            document.getElementById(pageId).classList.add('active');
+            // Activer le bouton correspondant
+            document.getElementById('btn-' + pageId).classList.add('active-tab');
+            
+            // Remonter en haut de page
+            window.scrollTo(0,0);
+        }
+
+        // MOTEUR DE RECHERCHE GLOBAL
+        function searchGlobal() {
+            let input = document.getElementById('globalSearch').value.toLowerCase();
+            let cards = document.querySelectorAll('.page-content .bg-white, .page-content li');
+            
+            if(input.length > 2) {
+                // Logique de recherche simple : on pourrait ici rediriger 
+                // ou filtrer les éléments visibles dans la page active
+            }
+        }
+    </script>
+</body>
+</html>
