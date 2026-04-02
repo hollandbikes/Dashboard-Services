@@ -25,9 +25,26 @@
         body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; }
         h1, h2, h3, h4, h5 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
 
-        .sidebar { width: 300px; position: fixed; height: 100vh; background: #fff; border-right: 1px solid #e2e8f0; z-index: 50; display: flex; flex-direction: column; justify-content: space-between; }
+        /* Sidebar avec état collapsed */
+        .sidebar { width: 80px; position: fixed; height: 100vh; background: #fff; border-right: 1px solid #e2e8f0; z-index: 50; display: flex; flex-direction: column; transition: width 0.3s ease; overflow-x: hidden; }
+        .sidebar.expanded { width: 320px; }
         .dark .sidebar { background: #112240; border-right-color: #233554; }
-        .main-content { margin-left: 300px; padding: 40px; max-width: 1400px; }
+        
+        .main-content { margin-left: 80px; transition: margin-left 0.3s ease; }
+        .main-content.expanded { margin-left: 320px; }
+
+        /* Header fixe */
+        .top-header { position: fixed; top: 0; left: 80px; right: 0; height: 70px; background: white; border-bottom: 2px solid #e2e8f0; z-index: 40; display: flex; align-items: center; padding: 0 40px; gap: 30px; transition: left 0.3s ease; }
+        .top-header.expanded { left: 320px; }
+        .dark .top-header { background: #112240; border-bottom-color: #233554; }
+
+        .content-wrapper { padding: 40px; max-width: 1400px; margin-top: 70px; }
+
+        /* Menu burger */
+        .menu-burger { position: fixed; top: 15px; left: 20px; z-index: 60; cursor: pointer; padding: 10px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; transition: all 0.3s ease; }
+        .menu-burger:hover { background: #f8fafc; }
+        .dark .menu-burger { background: #112240; border-color: #233554; }
+        .dark .menu-burger:hover { background: #1e293b; }
 
         .nav-link { padding: 12px 20px; display: flex; align-items: center; cursor: pointer; font-weight: 700; font-size: 14px; color: #475569; transition: 0.2s; border-left: 4px solid transparent; text-transform: uppercase; letter-spacing: 0.03em; }
         .nav-link:hover { background: #f8fafc; color: #E65A28; }
@@ -87,6 +104,31 @@
         .dark .option-featured {
             box-shadow: 0 20px 50px rgba(79, 172, 254, 0.2), 0 0 0 3px #4facfe;
         }
+        /* Ajustements Sidebar réduite */
+        .nav-link { justify-content: center; }
+        .sidebar.expanded .nav-link { justify-content: flex-start; }
+        .nav-link .nav-text { display: none; margin-left: 12px; }
+        .sidebar.expanded .nav-link .nav-text { display: inline; }
+        .sidebar .sub-nav { display: none; }
+        .sidebar.expanded .nav-link.active + .sub-nav { display: block; }
+
+        /* Barre de recherche */
+        .search-bar { flex: 1; max-width: 600px; position: relative; }
+        .search-input { width: 100%; padding: 12px 45px 12px 20px; border-radius: 10px; border: 2px solid #e2e8f0; font-size: 15px; transition: all 0.3s ease; }
+        .search-input:focus { outline: none; border-color: #E65A28; box-shadow: 0 0 0 3px rgba(230, 90, 40, 0.1); }
+        .dark .search-input { background: #1e293b; border-color: #334155; color: white; }
+        .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+
+        /* Tuiles Accueil */
+        .home-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 30px; }
+        .home-tile { background: white; border-radius: 16px; padding: 32px; border: 2px solid #e2e8f0; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: block; }
+        .home-tile:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: #E65A28; }
+        .dark .home-tile { background: #112240; border-color: #233554; }
+        .dark .home-tile:hover { border-color: #E65A28; }
+        .home-tile-icon { width: 60px; height: 60px; background: linear-gradient(135deg, #003366, #0055aa); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; margin-bottom: 20px; }
+        .home-tile-title { font-size: 20px; font-weight: 800; color: #003366; margin-bottom: 12px; text-transform: uppercase; }
+        .dark .home-tile-title { color: white; }
+        .home-tile-desc { color: #64748b; font-size: 14px; line-height: 1.6; }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-hb-dark-bg text-slate-800 dark:text-hb-dark-text">
@@ -99,7 +141,20 @@
         <i class="fas fa-moon dark:hidden text-hb-blue text-xl"></i>
         <i class="fas fa-sun hidden dark:block text-yellow-400 text-xl"></i>
     </button>
+<div class="menu-burger" onclick="toggleSidebar()">
+        <i class="fas fa-bars text-hb-blue dark:text-white text-xl"></i>
+    </div>
 
+    <header class="top-header" id="topHeader">
+        <div class="cursor-pointer" onclick="showSection('home')">
+            <img src="Logo HB_v1_Bleu.jpg" class="h-10 dark:hidden" alt="Holland Bikes">
+            <img src="Logo HB_v1_Blanc.png" class="h-10 hidden dark:block" alt="Holland Bikes">
+        </div>
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="Rechercher une section (ex: LLD, Upway)..." onkeyup="filterSearch()">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+    </header>
     <aside class="sidebar overflow-y-auto">
         <div>
             <div class="p-6 border-b dark:border-slate-800 text-center">
@@ -113,11 +168,13 @@
                     <i class="fas fa-file-invoice-dollar w-7 text-center mr-2"></i> Location Longue Durée
                 </div>
                 <div class="sub-nav">
-                    <div class="sub-nav-link" onclick="scrollToAnchor('lld-greenleaze')"><i class="fas fa-circle-dot"></i> GreenLeaze</div>
-                    <div class="sub-nav-link" onclick="scrollToAnchor('lld-argumentaire')"><i class="fas fa-circle-dot"></i> Argumentaire de vente</div>
-                    <div class="sub-nav-link" onclick="scrollToAnchor('lld-forfaits')"><i class="fas fa-circle-dot"></i> Forfaits révision</div>
-                    <div class="sub-nav-link" onclick="scrollToAnchor('lld-procedure-vente')"><i class="fas fa-circle-dot"></i> Procédure de vente</div>
-                    <div class="sub-nav-link" onclick="scrollToAnchor('lld-facturation')"><i class="fas fa-circle-dot"></i> Facturation CycleSoftware</div>
+                        <div class="nav-link active" onclick="showSection('home')"><i class="fas fa-home w-8 text-center text-xl"></i> <span class="nav-text">Accueil</span></div>
+                        <div class="nav-link" onclick="showSection('lld')"><i class="fas fa-file-invoice-dollar w-8 text-center text-xl"></i> <span class="nav-text">Location Longue Durée</span></div>
+                        <div class="nav-link" onclick="showSection('abo')"><i class="fas fa-tools w-8 text-center text-xl"></i> <span class="nav-text">Abonnement Entretien</span></div>
+                        <div class="nav-link" onclick="showSection('assurance')"><i class="fas fa-shield-alt w-8 text-center text-xl"></i> <span class="nav-text">Assurance</span></div>
+                        <div class="nav-link" onclick="showSection('partenaires')"><i class="fas fa-handshake w-8 text-center text-xl"></i> <span class="nav-text">Partenaires de Mobilités</span></div>
+                        <div class="nav-link" onclick="showSection('reprise')"><i class="fas fa-sync w-8 text-center text-xl"></i> <span class="nav-text">Reprise vélo</span></div>
+                        <div class="nav-link" onclick="showSection('clickcollect')"><i class="fas fa-box-open w-8 text-center text-xl"></i> <span class="nav-text">Click & Collect</span></div>
                 </div>
 
                 <!-- Abonnement Entretien -->
@@ -188,10 +245,47 @@
         </div>
     </aside>
 
-    <main class="main-content">
+<main class="main-content" id="mainContent">
+        <div class="content-wrapper">
 
+        <section id="home" class="section-page active">
+            <h1 class="text-4xl font-black mb-6 text-hb-blue dark:text-white">Dashboard Services 2026</h1>
+            
+            <div class="home-tiles">
+                <div class="home-tile" onclick="showSection('lld')">
+                    <div class="home-tile-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <h3 class="home-tile-title">Location LLD</h3>
+                    <p class="home-tile-desc">GreenLeaze, simulateurs et procédures.</p>
+                </div>
+                <div class="home-tile" onclick="showSection('abo')">
+                    <div class="home-tile-icon" style="background: linear-gradient(135deg, #10b981, #34d399);"><i class="fas fa-tools"></i></div>
+                    <h3 class="home-tile-title">Abonnements</h3>
+                    <p class="home-tile-desc">QR codes Stripe et conditions.</p>
+                </div>
+                <div class="home-tile" onclick="showSection('assurance')">
+                    <div class="home-tile-icon" style="background: linear-gradient(135deg, #E65A28, #ff8c5a);"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="home-tile-title">Assurances</h3>
+                    <p class="home-tile-desc">Offres Laka et mois offerts.</p>
+                </div>
+                <div class="home-tile" onclick="showSection('partenaires')">
+                    <div class="home-tile-icon" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa);"><i class="fas fa-handshake"></i></div>
+                    <h3 class="home-tile-title">Partenaires</h3>
+                    <p class="home-tile-desc">Zenride, Lease a Bike, Edenred...</p>
+                </div>
+                <div class="home-tile" onclick="showSection('reprise')">
+                    <div class="home-tile-icon" style="background: linear-gradient(135deg, #06b6d4, #22d3ee);"><i class="fas fa-recycle"></i></div>
+                    <h3 class="home-tile-title">Reprise</h3>
+                    <p class="home-tile-desc">Procédures Upway B2B.</p>
+                </div>
+                <div class="home-tile" onclick="showSection('clickcollect')">
+                    <div class="home-tile-icon" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);"><i class="fas fa-box"></i></div>
+                    <h3 class="home-tile-title">Click & Collect</h3>
+                    <p class="home-tile-desc">Procédures Véligo et Upway.</p>
+                </div>
+            </div>
+        </section>
         <!-- =============================== LLD =============================== -->
-        <section id="lld" class="section-page active">
+        <section id="lld" class="section-page">
             <h2 class="text-3xl font-black mb-6 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Location Longue Durée (LLD)</h2>
 
             <span class="anchor" id="lld-greenleaze"></span>
@@ -1010,7 +1104,7 @@
                 </div>
             </div>
         </section>
-
+        </div>
     </main>
 
     <script>
@@ -1043,6 +1137,28 @@
 
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('expanded');
+            document.getElementById('mainContent').classList.toggle('expanded');
+            document.getElementById('topHeader').classList.toggle('expanded');
+        }
+
+        function filterSearch() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const tiles = document.querySelectorAll('.home-tile');
+            
+            // Si on cherche, on affiche la page d'accueil
+            if (input.length > 0) {
+                document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+                document.getElementById('home').classList.add('active');
+            }
+
+            tiles.forEach(tile => {
+                const text = tile.textContent.toLowerCase();
+                tile.style.display = text.includes(input) ? "block" : "none";
+            });
         }
 
         const inputCalcMoisLld = document.getElementById('calc-mois-lld');
