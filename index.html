@@ -21,82 +21,69 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
-        
-        body { font-family: 'Inter', sans-serif; font-size: 17px; line-height: 1.6; transition: background-color 0.3s; }
+
+        body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.7; padding-top: 80px; }
         h1, h2, h3, h4, h5 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; }
-        
-        /* Header Fixe */
-        .header { height: 80px; position: fixed; top: 0; left: 0; right: 0; background: #fff; border-bottom: 1px solid #e2e8f0; z-index: 1000; display: flex; align-items: center; padding: 0 24px; }
-        .dark .header { background: #112240; border-bottom-color: #233554; }
 
-        /* Sidebar Rétractable */
-        .sidebar { width: 320px; position: fixed; top: 80px; left: 0; bottom: 0; background: #fff; border-right: 1px solid #e2e8f0; z-index: 900; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; overflow-x: hidden; }
+        /* Header fixe */
+        .top-header { position: fixed; top: 0; left: 0; width: 100%; height: 80px; background: #fff; z-index: 100; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .dark .top-header { background: #112240; border-bottom-color: #233554; }
+
+        /* Sidebar avec gestion du collapse */
+        .sidebar { width: 300px; position: fixed; top: 80px; left: 0; height: calc(100vh - 80px); background: #fff; border-right: 1px solid #e2e8f0; z-index: 50; display: flex; flex-direction: column; justify-content: space-between; transition: width 0.3s ease; overflow-x: hidden; }
         .dark .sidebar { background: #112240; border-right-color: #233554; }
-        .sidebar.collapsed { width: 80px; }
         
-        .main-content { margin-left: 320px; padding: 120px 40px 40px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); max-width: 1400px; }
-        .sidebar.collapsed + .main-content { margin-left: 80px; }
+        .sidebar.collapsed { width: 80px; }
+        .sidebar.collapsed .nav-text, .sidebar.collapsed .contact-block, .sidebar.collapsed .sub-nav { display: none !important; }
+        .sidebar.collapsed .nav-link { justify-content: center; padding: 16px 0; }
+        .sidebar.collapsed .nav-link i { margin-right: 0; font-size: 1.25rem; }
 
-        /* Menu */
-        .nav-link { padding: 16px 24px; display: flex; align-items: center; cursor: pointer; font-weight: 700; font-size: 15px; color: #475569; transition: 0.2s; border-left: 4px solid transparent; text-transform: uppercase; white-space: nowrap; }
+        .main-content { margin-left: 300px; padding: 40px; max-width: 1400px; transition: margin-left 0.3s ease; }
+        .main-content.expanded { margin-left: 80px; }
+
+        .nav-link { padding: 12px 20px; display: flex; align-items: center; cursor: pointer; font-weight: 700; font-size: 14px; color: #475569; transition: 0.2s; border-left: 4px solid transparent; text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap; }
         .nav-link:hover { background: #f8fafc; color: #E65A28; }
         .nav-link.active { background: #eff6ff; color: #E65A28; border-left-color: #E65A28; }
         .dark .nav-link { color: #94a3b8; }
         .dark .nav-link:hover { background: #1e293b; color: #E65A28; }
-        .sidebar.collapsed .nav-text { display: none; }
-        .sidebar.collapsed .nav-link i { margin-right: 0; font-size: 20px; min-width: 30px; text-align: center; }
+        .dark .nav-link.active { background: rgba(230, 90, 40, 0.1); }
 
-        /* Search */
-        .search-container { position: relative; width: 450px; margin-left: 30px; }
-        .search-input { width: 100%; padding: 12px 20px 12px 45px; border-radius: 99px; border: 2px solid #e2e8f0; outline: none; transition: 0.3s; }
-        .search-input:focus { border-color: #E65A28; }
-        .dark .search-input { background: #0a192f; border-color: #233554; color: white; }
+        .sub-nav { display: none; background: #f8fafc; border-left: 4px solid #e2e8f0; }
+        .dark .sub-nav { background: #0d1f3c; border-left-color: #233554; }
+        .nav-link.active + .sub-nav { display: block; }
+        .sub-nav-link { padding: 8px 16px 8px 32px; display: flex; align-items: center; cursor: pointer; font-size: 13px; font-weight: 500; color: #64748b; transition: 0.15s; font-family: 'Inter', sans-serif; text-transform: none; letter-spacing: 0; white-space: nowrap; }
+        .sub-nav-link:hover { color: #E65A28; background: #fff; }
+        .dark .sub-nav-link { color: #94a3b8; }
+        .dark .sub-nav-link:hover { background: #1e293b; color: #E65A28; }
+        .sub-nav-link i { width: 18px; text-align: center; margin-right: 8px; font-size: 11px; color: #94a3b8; }
 
-        /* Tuiles Accueil */
-        .tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
-        .tile-card { background: white; border-radius: 20px; padding: 40px 30px; text-align: center; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; align-items: center; gap: 20px; }
-        .dark .tile-card { background: #112240; border-color: #233554; }
-        .tile-card:hover { transform: translateY(-10px); border-color: #E65A28; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .tile-card i { font-size: 48px; color: #003366; }
-        .dark .tile-card i { color: #E65A28; }
-
-        /* Sections */
         .section-page { display: none; animation: fadeIn 0.4s ease-in-out; }
         .section-page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { background: white; border-radius: 12px; padding: 32px; border: 1px solid #e2e8f0; margin-bottom: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .card { background: white; border-radius: 12px; padding: 28px; border: 1px solid #e2e8f0; margin-bottom: 28px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
         .dark .card { background: #112240; border-color: #233554; }
-        
-        .btn-hb { background: #003366; color: white !important; padding: 14px 28px; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; justify-content: center; transition: 0.3s; text-decoration: none; cursor: pointer; border: none; }
+
+        .btn-hb { background: #003366; color: white !important; padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; justify-content: center; transition: 0.3s; text-decoration: none; cursor: pointer; border: none; }
         .btn-hb:hover { background: #E65A28; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(230, 90, 40, 0.3); }
 
-        .img-zoom { cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px; border: 1px solid #cbd5e1; max-width: 100%; height: auto; display: block; margin: 15px 0; }
+        .bubble { background: #f8fafc; padding: 22px; border-radius: 12px; border-left: 5px solid #003366; }
+        .dark .bubble { background: #1e293b; border-left-color: #4facfe; }
+
+        .img-zoom { cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 8px; border: 1px solid #cbd5e1; max-width: 100%; height: auto; display: block; margin: 12px 0; }
         .dark .img-zoom { border-color: #334155; }
         .img-zoom:hover { transform: scale(1.03); box-shadow: 0 10px 25px rgba(0,0,0,0.15); z-index: 10; position: relative; }
 
         #imgModal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         #imgModal img { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.5); object-fit: contain; }
 
-        .sub-nav { padding-left: 20px; margin-bottom: 15px; }
-        .sidebar.collapsed .sub-nav { display: none; }
-        .sub-nav-item { padding: 8px 24px; font-size: 14px; cursor: pointer; color: #64748b; font-weight: 500; transition: 0.2s; display: flex; align-items: center; }
-        .sub-nav-item:hover { color: #E65A28; }
-        .sub-nav-item::before { content: "•"; margin-right: 10px; color: #cbd5e1; }
+        .text-body { font-size: 1rem; line-height: 1.75; }
+        .anchor { display: block; position: relative; top: -100px; visibility: hidden; }
 
-        /* Partenaires modernisés */
-        .partner-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        .partner-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 25px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: 0.3s; min-height: 200px; }
-        .dark .partner-card { background: #1e293b; border-color: #334155; }
-        .partner-card:hover { transform: translateY(-5px); border-color: #E65A28; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .partner-card img { max-height: 60px; margin-bottom: 20px; filter: grayscale(1); transition: 0.3s; }
-        .partner-card:hover img { filter: grayscale(0); }
-
-        .bubble { background: #f8fafc; padding: 24px; border-radius: 12px; border-left: 5px solid #003366; }
-        .dark .bubble { background: #1e293b; border-left-color: #4facfe; }
-
-        .text-body { font-size: 1.1rem; line-height: 1.7; }
-        .text-important { font-size: 1.2rem; font-weight: 600; }
+        /* Effets pour les cartes Partenaires & Accueil */
+        .hover-card { transition: all 0.3s ease; }
+        .hover-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); border-color: #E65A28; }
+        .dark .hover-card:hover { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); border-color: #E65A28; }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-hb-dark-bg text-slate-800 dark:text-hb-dark-text">
@@ -105,9 +92,9 @@
         <img id="modalImg" src="" alt="Zoom Image">
     </div>
 
-    <header class="header">
-        <div class="flex items-center">
-            <button onclick="toggleSidebar()" class="p-3 mr-4 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-2xl text-hb-blue dark:text-white transition">
+    <header class="top-header">
+        <div class="flex items-center gap-4">
+            <button onclick="toggleSidebar()" class="text-hb-blue dark:text-white text-2xl p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
                 <i class="fas fa-bars"></i>
             </button>
             <div class="cursor-pointer" onclick="showSection('home')">
@@ -116,437 +103,231 @@
             </div>
         </div>
 
-        <div class="search-container">
-            <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-            <input type="text" id="liveSearch" placeholder="Rechercher une section, un mot-clé..." class="search-input" onkeyup="filterSearch()">
+        <div class="flex-1 max-w-xl mx-8 relative">
+            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+            <input type="text" id="searchInput" onkeyup="searchLive()" placeholder="Rechercher une section, un partenaire, un service..." class="w-full pl-12 pr-4 py-3 rounded-full border border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-hb-orange dark:text-white transition-all text-sm font-medium">
         </div>
 
-        <div class="ml-auto flex items-center gap-4">
-            <button onclick="toggleTheme()" class="p-3 bg-slate-100 dark:bg-hb-dark-card rounded-full shadow-sm hover:scale-110 transition-transform">
-                <i class="fas fa-moon dark:hidden text-hb-blue text-xl"></i>
-                <i class="fas fa-sun hidden dark:block text-yellow-400 text-xl"></i>
-            </button>
-        </div>
+        <button onclick="toggleTheme()" class="p-3 bg-slate-100 dark:bg-slate-800 rounded-full hover:scale-110 transition-transform">
+            <i class="fas fa-moon dark:hidden text-hb-blue text-lg"></i>
+            <i class="fas fa-sun hidden dark:block text-yellow-400 text-lg"></i>
+        </button>
     </header>
 
-    <aside id="sidebar" class="sidebar">
-        <div class="flex-grow overflow-y-auto mt-4">
-            <nav>
-                <div class="nav-link active" id="nav-home" onclick="showSection('home')"><i class="fas fa-home w-8 text-center text-xl mr-3"></i> <span class="nav-text">Accueil</span></div>
-                
-                <div class="nav-link" id="nav-lld" onclick="showSection('lld')"><i class="fas fa-file-invoice-dollar w-8 text-center text-xl mr-3"></i> <span class="nav-text">Location Longue Durée</span></div>
-                <div class="sub-nav">
-                    <div class="sub-nav-item" onclick="showSection('lld'); setTimeout(() => document.getElementById('lld-greenleaze').scrollIntoView({behavior:'smooth', block:'start'}), 100)">GreenLeaze</div>
-                    <div class="sub-nav-item" onclick="showSection('lld'); setTimeout(() => document.getElementById('lld-argumentaire').scrollIntoView({behavior:'smooth', block:'start'}), 100)">Argumentaire</div>
-                    <div class="sub-nav-item" onclick="showSection('lld'); setTimeout(() => document.getElementById('lld-procedure-vente').scrollIntoView({behavior:'smooth', block:'start'}), 100)">Procédure de vente</div>
-                    <div class="sub-nav-item" onclick="showSection('lld'); setTimeout(() => document.getElementById('lld-facturation').scrollIntoView({behavior:'smooth', block:'start'}), 100)">Facturation</div>
-                </div>
+    <aside class="sidebar overflow-y-auto" id="sidebar">
+        <nav class="mt-4">
+            <div class="nav-link" onclick="showSection('home', this)">
+                <i class="fas fa-home w-7 text-center mr-2"></i> <span class="nav-text">Accueil</span>
+            </div>
 
-                <div class="nav-link" id="nav-abo" onclick="showSection('abo')"><i class="fas fa-tools w-8 text-center text-xl mr-3"></i> <span class="nav-text">Abonnement Entretien</span></div>
-                <div class="sub-nav">
-                    <div class="sub-nav-item" onclick="showSection('abo'); setTimeout(() => document.getElementById('abo-presentation').scrollIntoView({behavior:'smooth', block:'start'}), 100)">Présentation</div>
-                    <div class="sub-nav-item" onclick="showSection('abo'); setTimeout(() => document.getElementById('abo-stripe').scrollIntoView({behavior:'smooth', block:'start'}), 100)">Process d'inscription</div>
-                    <div class="sub-nav-item" onclick="showSection('abo'); setTimeout(() => document.getElementById('abo-verification').scrollIntoView({behavior:'smooth', block:'start'}), 100)">Vérification Stripe</div>
-                </div>
+            <div class="nav-link" onclick="showSection('lld', this)">
+                <i class="fas fa-file-invoice-dollar w-7 text-center mr-2"></i> <span class="nav-text">Location Longue Durée</span>
+            </div>
+            <div class="sub-nav">
+                <div class="sub-nav-link" onclick="scrollToAnchor('lld-greenleaze')"><i class="fas fa-circle-dot"></i> GreenLeaze</div>
+                <div class="sub-nav-link" onclick="scrollToAnchor('lld-argumentaire')"><i class="fas fa-circle-dot"></i> Argumentaire de vente</div>
+                <div class="sub-nav-link" onclick="scrollToAnchor('lld-forfaits')"><i class="fas fa-circle-dot"></i> Forfaits révision</div>
+                <div class="sub-nav-link" onclick="scrollToAnchor('lld-procedure-vente')"><i class="fas fa-circle-dot"></i> Procédure de vente</div>
+                <div class="sub-nav-link" onclick="scrollToAnchor('lld-facturation')"><i class="fas fa-circle-dot"></i> Facturation CycleSoftware</div>
+            </div>
 
-                <div class="nav-link" id="nav-assurance" onclick="showSection('assurance')"><i class="fas fa-shield-alt w-8 text-center text-xl mr-3"></i> <span class="nav-text">Assurance</span></div>
-                <div class="sub-nav">
-                    <div class="sub-nav-item" onclick="showSection('assurance'); setTimeout(() => document.getElementById('ass-4mois').scrollIntoView({behavior:'smooth', block:'start'}), 100)">Offre 4 mois offerts</div>
-                    <div class="sub-nav-item" onclick="showSection('assurance'); setTimeout(() => document.getElementById('ass-laka').scrollIntoView({behavior:'smooth', block:'start'}), 100)">Assurance mensuelle Laka</div>
-                    <div class="sub-nav-item" onclick="showSection('assurance'); setTimeout(() => document.getElementById('ass-comparatif').scrollIntoView({behavior:'smooth', block:'start'}), 100)">Comparatif Laka</div>
-                </div>
+            <div class="nav-link" onclick="showSection('abo', this)">
+                <i class="fas fa-tools w-7 text-center mr-2"></i> <span class="nav-text">Abonnement Entretien</span>
+            </div>
+            <div class="sub-nav">
+                <div class="sub-nav-link" onclick="scrollToAnchor('abo-presentation')"><i class="fas fa-circle-dot"></i> Présentation & tarifs</div>
+            </div>
 
-                <div class="nav-link" id="nav-partenaires" onclick="showSection('partenaires')"><i class="fas fa-handshake w-8 text-center text-xl mr-3"></i> <span class="nav-text">Partenaires Mobilités</span></div>
-                
-                <div class="nav-link" id="nav-reprise" onclick="showSection('reprise')"><i class="fas fa-sync w-8 text-center text-xl mr-3"></i> <span class="nav-text">Reprise vélo</span></div>
-                
-                <div class="nav-link" id="nav-clickcollect" onclick="showSection('clickcollect')"><i class="fas fa-box-open w-8 text-center text-xl mr-3"></i> <span class="nav-text">Click & Collect</span></div>
-            </nav>
-        </div>
+            <div class="nav-link" onclick="showSection('assurance', this)">
+                <i class="fas fa-shield-alt w-7 text-center mr-2"></i> <span class="nav-text">Assurance</span>
+            </div>
+            <div class="sub-nav">
+                <div class="sub-nav-link" onclick="scrollToAnchor('ass-4mois')"><i class="fas fa-circle-dot"></i> Assurance 4 mois offerte</div>
+            </div>
 
-        <div class="p-6 bg-slate-50 dark:bg-slate-900 border-t dark:border-slate-800 nav-text">
-            <p class="font-bold text-lg mb-3 text-hb-blue dark:text-white">Contact :</p>
-            <p class="text-sm font-semibold mb-1">Bruno Buisson</p>
-            <a href="mailto:bruno.buisson@hollandbikes.com" class="flex items-center text-hb-orange hover:underline mb-3 font-medium text-sm break-all">
-                <i class="fas fa-envelope mr-3 text-lg"></i> bruno.buisson@hollandbikes.com
+            <div class="nav-link" onclick="showSection('partenaires', this)">
+                <i class="fas fa-handshake w-7 text-center mr-2"></i> <span class="nav-text">Partenaires de Mobilités</span>
+            </div>
+            <div class="sub-nav">
+                <div class="sub-nav-link" onclick="scrollToAnchor('part-zenride')"><i class="fas fa-circle-dot"></i> Zenride</div>
+                <div class="sub-nav-link" onclick="scrollToAnchor('part-lease')"><i class="fas fa-circle-dot"></i> Lease a Bike</div>
+                <div class="sub-nav-link" onclick="scrollToAnchor('part-bee')"><i class="fas fa-circle-dot"></i> BeeToGreen</div>
+            </div>
+
+            <div class="nav-link" onclick="showSection('reprise', this)">
+                <i class="fas fa-sync w-7 text-center mr-2"></i> <span class="nav-text">Reprise vélo</span>
+            </div>
+
+            <div class="nav-link" onclick="showSection('clickcollect', this)">
+                <i class="fas fa-box-open w-7 text-center mr-2"></i> <span class="nav-text">Click &amp; Collect</span>
+            </div>
+
+        </nav>
+        
+        <div class="contact-block p-5 bg-slate-100 dark:bg-slate-800 border-t dark:border-slate-700 m-3 rounded-xl">
+            <p class="font-bold text-base mb-2 text-hb-blue dark:text-white">Contact :</p>
+            <a href="mailto:bruno.buisson@hollandbikes.com" class="flex items-center text-hb-orange hover:underline mb-2 font-medium text-sm break-all">
+                <i class="fas fa-envelope mr-2"></i> bruno.buisson@hollandbikes.com
             </a>
-            <a href="tel:+33685269576" class="flex items-center text-hb-orange hover:underline font-bold text-lg">
-                <i class="fas fa-phone-alt mr-3"></i> 06 85 26 95 76
+            <a href="tel:+33685269576" class="flex items-center text-hb-orange hover:underline font-medium text-sm">
+                <i class="fas fa-phone mr-2"></i> +33 6 85 26 95 76
             </a>
         </div>
     </aside>
 
-    <main class="main-content">
+    <main class="main-content" id="mainContent">
 
         <section id="home" class="section-page active">
-            <h1 class="text-4xl font-black mb-4 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Dashboard Services Holland Bikes</h1>
-            <p class="text-xl text-slate-500 dark:text-slate-400 font-medium mb-12">Bienvenue. Sélectionnez un service ci-dessous pour accéder aux guides, procédures et outils.</p>
-            
-            <div class="tile-grid">
-                <div class="tile-card" onclick="showSection('lld')">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                    <h3 class="font-black text-xl uppercase">Location Longue Durée</h3>
-                    <p class="text-slate-500">GreenLeaze, simulations, argumentaires et calcul de commission.</p>
+            <div class="mb-10 text-center">
+                <h1 class="text-4xl font-black text-hb-blue dark:text-white mb-4">Bienvenue sur le Dashboard Services</h1>
+                <p class="text-lg text-slate-500 dark:text-slate-400">Accédez rapidement à toutes nos offres, argumentaires et processus opérationnels.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="homeTiles">
+                <div class="card hover-card cursor-pointer !mb-0 border-t-4 border-hb-blue" data-search="location longue durée lld greenleaze" onclick="showSection('lld')">
+                    <i class="fas fa-file-invoice-dollar text-4xl text-hb-blue mb-4 block"></i>
+                    <h3 class="text-xl font-bold mb-2">Location Longue Durée (LLD)</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">GreenLeaze, forfaits révision, facturation et argumentaires.</p>
                 </div>
-                <div class="tile-card" onclick="showSection('abo')">
-                    <i class="fas fa-tools"></i>
-                    <h3 class="font-black text-xl uppercase">Abonnement Entretien</h3>
-                    <p class="text-slate-500">Formules 15€/25€, QR Codes Stripe et suivi des abonnements.</p>
+                <div class="card hover-card cursor-pointer !mb-0 border-t-4 border-hb-orange" data-search="abonnement entretien réparation" onclick="showSection('abo')">
+                    <i class="fas fa-tools text-4xl text-hb-orange mb-4 block"></i>
+                    <h3 class="text-xl font-bold mb-2">Abonnement Entretien</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Présentation des forfaits, processus Stripe et éligibilité.</p>
                 </div>
-                <div class="tile-card" onclick="showSection('assurance')">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3 class="font-black text-xl uppercase">Assurance</h3>
-                    <p class="text-slate-500">Offres Laka, 4 mois offerts et procédures de remplacement.</p>
+                <div class="card hover-card cursor-pointer !mb-0 border-t-4 border-green-500" data-search="assurance laka vol casse" onclick="showSection('assurance')">
+                    <i class="fas fa-shield-alt text-4xl text-green-500 mb-4 block"></i>
+                    <h3 class="text-xl font-bold mb-2">Assurance</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Assurance 4 mois offerte, extension Laka et comparatif.</p>
                 </div>
-                <div class="tile-card" onclick="showSection('partenaires')">
-                    <i class="fas fa-handshake"></i>
-                    <h3 class="font-black text-xl uppercase">Partenaires Mobilités</h3>
-                    <p class="text-slate-500">Zenride, BeeToGreen, Lease a Bike et Cartes Mobilités.</p>
+                <div class="card hover-card cursor-pointer !mb-0 border-t-4 border-purple-500" data-search="partenaires mobilités zenride lease a bike beetogreen" onclick="showSection('partenaires')">
+                    <i class="fas fa-handshake text-4xl text-purple-500 mb-4 block"></i>
+                    <h3 class="text-xl font-bold mb-2">Partenaires de Mobilités</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Gestion Zenride, Lease a Bike, BeeToGreen et cartes de mobilité.</p>
                 </div>
-                <div class="tile-card" onclick="showSection('reprise')">
-                    <i class="fas fa-sync"></i>
-                    <h3 class="font-black text-xl uppercase">Reprise vélo</h3>
-                    <p class="text-slate-500">Estimation et rachat via Upway B2B.</p>
+                <div class="card hover-card cursor-pointer !mb-0 border-t-4 border-red-500" data-search="reprise vélo rachat upway mécanique" onclick="showSection('reprise')">
+                    <i class="fas fa-sync text-4xl text-red-500 mb-4 block"></i>
+                    <h3 class="text-xl font-bold mb-2">Reprise Vélo</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Rachat vélos électriques via Upway et vélos mécaniques.</p>
                 </div>
-                <div class="tile-card" onclick="showSection('clickcollect')">
-                    <i class="fas fa-box-open"></i>
-                    <h3 class="font-black text-xl uppercase">Click & Collect</h3>
-                    <p class="text-slate-500">Gestion des vélos régionaux Véligo et livraisons Upway.</p>
+                <div class="card hover-card cursor-pointer !mb-0 border-t-4 border-teal-500" data-search="click collect véligo upway livraison" onclick="showSection('clickcollect')">
+                    <i class="fas fa-box-open text-4xl text-teal-500 mb-4 block"></i>
+                    <h3 class="text-xl font-bold mb-2">Click & Collect</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Gestion des livraisons partenaires (Véligo, Upway).</p>
                 </div>
             </div>
         </section>
 
         <section id="lld" class="section-page">
-            <h2 class="text-4xl font-black mb-8 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Location Longue Durée (LLD)</h2>
+            <h2 class="text-3xl font-black mb-6 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Location Longue Durée (LLD)</h2>
 
-            <div id="lld-greenleaze" class="card border-l-8 border-hb-blue">
-                <h3 class="text-2xl font-black mb-6 text-hb-blue dark:text-white uppercase">Pourquoi GreenLeaze ?</h3>
-                <div class="text-body space-y-4">
-                    <p>GreenLeaze est notre prestataire pour la LLD. Lorsqu'un client est intéressé par une LLD, GreenLeaze nous achète le vélo et le loue au client pour un prix mensuel prédéfini. Le contrat est établi entre le client et GreenLeaze.</p>
-                    <p>GreenLeaze remplace MyPangee. Par rapport à MyPangee, GreenLeaze est légèrement moins cher pour les clients, mais surtout beaucoup plus rapide à mettre en place (souscription en ligne en quelques minutes et vérification des fonds via open banking), et plus simple à utiliser, directement depuis un ordinateur ou un téléphone.</p>
-                </div>
-                <div class="mt-8 flex flex-wrap gap-4">
-                    <a href="https://greenleaze.notion.site/GreenLeaze-infos-savoir-1aeb77989c87800994d9e4fc96bd1ba6" target="_blank" class="btn-hb"><i class="fas fa-question-circle mr-3"></i> Consulter la FAQ GreenLeaze</a>
-                    <a href="https://dashboard.greenleaze.com/shop/customers" target="_blank" class="btn-hb bg-hb-orange"><i class="fas fa-external-link-alt mr-3"></i> Accès au Dashboard GreenLeaze</a>
-                </div>
+            <span class="anchor" id="lld-greenleaze"></span>
+            <h3 class="text-2xl font-bold mb-4 mt-2">GreenLeaze</h3>
+
+            <div class="bubble mb-8 text-body">
+                <p class="mb-4">GreenLeaze est notre prestataire pour la LLD. Lorsqu'un client est intéressé par une LLD, GreenLeaze nous achète le vélo et le loue au client pour un prix mensuel prédéfini. Le contrat est établi entre le client et GreenLeaze.</p>
+                <a href="https://greenleaze.notion.site/GreenLeaze-infos-savoir-1aeb77989c87800994d9e4fc96bd1ba6" target="_blank" class="btn-hb"><i class="fas fa-question-circle mr-2"></i> FAQ GreenLeaze</a>
             </div>
 
-            <div id="lld-argumentaire" class="card bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700">
-                <h3 class="text-2xl font-black mb-8 text-hb-blue dark:text-white uppercase">Argumentaires de vente</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="p-6 bg-white dark:bg-slate-900 rounded-xl shadow-sm border-l-4 border-hb-blue">
-                        <h4 class="text-xl font-black mb-4 text-hb-blue uppercase">Pour un Particulier</h4>
-                        <ul class="space-y-3 text-body">
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i> <span><strong>Simple et rapide :</strong> Souscription en moins de 5 minutes, sans dossier papier lourd.</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i> <span><strong>Tout inclus :</strong> Le client paye un loyer fixe qui comprend déjà l'assurance vol/casse.</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i> <span><span><strong>Flexibilité :</strong> Durée de 12, 24 ou 36 mois. Pas d'achat final, il repart sur un vélo neuf à la fin.</span></li>
+            <span class="anchor" id="lld-argumentaire"></span>
+            <div class="card shadow-lg">
+                <h4 class="font-bold text-2xl mb-6 text-center border-b pb-4">Argumentaire de vente LLD</h4>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 dark:bg-slate-800 p-6 rounded-xl border border-blue-200 dark:border-slate-700">
+                        <h5 class="text-xl font-black mb-4 text-hb-blue dark:text-white"><i class="fas fa-user mr-2"></i> Pour un client particulier :</h5>
+                        <ul class="list-disc ml-6 space-y-3 text-lg text-slate-700 dark:text-slate-300">
+                            <li>Simple et rapide : souscription en ~5 minutes, sans paperasse</li>
+                            <li>Un package tout compris avec entretien, assistance, casse/vol</li>
+                            <li>Engagement au choix : 12 / 24 / 36 mois selon votre besoin</li>
+                            <li>Aides employeur possibles (ex: Forfait Mobilités Durables) pour alléger le coût</li>
                         </ul>
                     </div>
-                    <div class="p-6 bg-white dark:bg-slate-900 rounded-xl shadow-sm border-l-4 border-hb-orange">
-                        <h4 class="text-xl font-black mb-4 text-hb-orange uppercase">Pour une Entreprise</h4>
-                        <ul class="space-y-3 text-body">
-                            <li class="flex items-start"><i class="fas fa-check-circle text-hb-orange mt-1 mr-3"></i> <span><strong>Déductibilité fiscale :</strong> Les loyers passent en charges d'exploitation.</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-hb-orange mt-1 mr-3"></i> <span><strong>Recrutement & RSE :</strong> Un argument fort pour attirer et fidéliser des talents.</span></li>
-                            <li class="flex items-start"><i class="fas fa-check-circle text-hb-orange mt-1 mr-3"></i> <span><strong>Pas d'immobilisation :</strong> Préserve la capacité d'investissement de la société.</span></li>
+
+                    <div class="bg-orange-50 dark:bg-slate-800 p-6 rounded-xl border border-orange-200 dark:border-slate-700">
+                        <h5 class="text-xl font-black mb-4 text-hb-orange"><i class="fas fa-biking mr-2"></i> Pour un passionné de vélo :</h5>
+                        <ul class="list-disc ml-6 space-y-3 text-lg text-slate-700 dark:text-slate-300">
+                            <li>Simple et rapide : souscription en ~5 minutes, sans paperasse</li>
+                            <li>Évolutif : changez de monture selon vos envies et pratiques (engagement 12/24/36 mois)</li>
+                            <li>Sérénité : services possibles (entretien, assistance, casse/vol) selon la boutique</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <div id="lld-forfaits" class="card">
-                <h3 class="text-2xl font-black mb-6 text-hb-blue dark:text-white uppercase">Options Forfait Révision</h3>
-                <p class="text-body mb-6">Dans le contrat GreenLeaze, le client peut choisir d'ajouter un forfait entretien optionnel :</p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="p-6 bg-slate-50 dark:bg-slate-800 rounded-lg text-center border-t-4 border-hb-blue">
-                        <p class="font-bold">Vélo Musculaire</p>
-                        <p class="text-3xl font-black text-hb-blue mt-2">6,50 € / mois</p>
-                    </div>
-                    <div class="p-6 bg-slate-50 dark:bg-slate-800 rounded-lg text-center border-t-4 border-hb-orange">
-                        <p class="font-bold">Vélo Électrique</p>
-                        <p class="text-3xl font-black text-hb-orange mt-2">8,00 € / mois</p>
-                    </div>
-                    <div class="p-6 bg-slate-50 dark:bg-slate-800 rounded-lg text-center border-t-4 border-hb-blue">
-                        <p class="font-bold">Vélo Cargo</p>
-                        <p class="text-3xl font-black text-hb-blue mt-2">10,50 € / mois</p>
-                    </div>
-                </div>
-                <div class="bubble bg-red-50 dark:bg-red-900/10 border-red-600">
-                    <p class="font-bold text-red-600">IMPORTANT :</p>
-                    <ul class="list-disc ml-6 mt-2 space-y-1">
-                        <li>Les révisions effectuées doivent être facturées séparément à GreenLeaze.</li>
-                        <li>Les accessoires hors contrat et les réparations de casse/usure normale hors révision sont à la charge du client (facturation directe magasin).</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="lld-procedure-vente" class="card border-l-8 border-hb-blue">
-                <h3 class="text-2xl font-black mb-6 text-hb-blue dark:text-white uppercase">Procédure de vente sur le Dashboard</h3>
-                <div class="space-y-6">
-                    <div class="flex items-start">
-                        <div class="w-12 h-12 bg-hb-blue text-white rounded-full flex items-center justify-center shrink-0 font-black text-xl mr-4">1</div>
-                        <div>
-                            <p class="font-bold text-lg">Simulation :</p>
-                            <p>Saisissez le prix TTC total (Vélo + Accessoires inclus dans le financement) et choisissez la durée sur le <a href="https://dashboard.greenleaze.com/shop/customers" target="_blank" class="text-hb-orange font-bold underline">Dashboard</a>.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="w-12 h-12 bg-hb-blue text-white rounded-full flex items-center justify-center shrink-0 font-black text-xl mr-4">2</div>
-                        <div>
-                            <p class="font-bold text-lg">Informations Client :</p>
-                            <p>Le client reçoit un lien sur son téléphone. Il saisit ses informations, connecte son compte bancaire (Open Banking) ou télécharge ses justificatifs.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="w-12 h-12 bg-hb-blue text-white rounded-full flex items-center justify-center shrink-0 font-black text-xl mr-4">3</div>
-                        <div>
-                            <p class="font-bold text-lg">Signature :</p>
-                            <p>Une fois le dossier accepté par GreenLeaze, le client signe électroniquement le contrat.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="w-12 h-12 bg-hb-blue text-white rounded-full flex items-center justify-center shrink-0 font-black text-xl mr-4">4</div>
-                        <div>
-                            <p class="font-bold text-lg">Livraison :</p>
-                            <p>Lorsque vous remettez le vélo au client, vous devez cliquer sur "Livrer" sur le dashboard. Cela déclenchera votre paiement par GreenLeaze.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="lld-facturation" class="card border-l-8 border-hb-orange">
-                <h3 class="text-2xl font-black mb-6 text-hb-blue dark:text-white uppercase">Facturation CycleSoftware</h3>
-                <p class="mb-4">Facturer à l'adresse suivante (même pour un particulier) :</p>
-                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-xl font-mono text-sm mb-8">
-                    <p class="font-bold text-lg text-hb-blue">Greenleaze SAS</p>
-                    <p>21 boulevard de Beauséjour, 75016, Paris</p>
-                    <p>RCS 984 942 573 Paris</p>
-                    <p class="mt-4 italic">Note : N'oubliez pas d'indiquer le nom de l'utilisateur final en référence.</p>
-                </div>
-
-                <div class="bg-blue-50 dark:bg-slate-900 border-2 border-hb-blue p-8 rounded-2xl">
-                    <h4 class="text-xl font-black text-hb-blue uppercase mb-6"><i class="fas fa-calculator mr-3"></i> Calculateur de commission brut vendeur</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
-                        <div>
-                            <label class="block font-bold mb-3">Durée du contrat (mois) :</label>
-                            <select id="calc-mois-lld" class="w-full p-4 border-2 rounded-xl focus:border-hb-orange outline-none dark:bg-slate-800">
-                                <option value="12">12 mois</option>
-                                <option value="24">24 mois</option>
-                                <option value="36" selected>36 mois</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-bold mb-3">Loyer mensuel TTC (€) :</label>
-                            <input type="number" id="calc-loyer-lld" class="w-full p-4 border-2 rounded-xl focus:border-hb-orange outline-none dark:bg-slate-800" placeholder="Ex: 85">
-                        </div>
-                    </div>
-                    <div class="mt-8 text-center bg-white dark:bg-slate-800 p-6 rounded-xl shadow-inner">
-                        <p class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-1">Votre commission estimée :</p>
-                        <p id="calc-result-lld" class="text-5xl font-black text-hb-orange">0.00 € brut</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="abo" class="section-page">
-            <h2 class="text-4xl font-black mb-8 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Abonnement Entretien</h2>
-
-            <div id="abo-presentation" class="card">
-                <h3 class="text-2xl font-black mb-6 text-hb-blue dark:text-white uppercase">Les Formules</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-                    <div class="card text-center hover:border-hb-orange transition cursor-pointer" onclick="openModal('QR code Stripe Vélo Classique.png')">
-                        <h4 class="font-black text-lg mb-4">VÉLO CLASSIQUE</h4>
-                        <p class="text-4xl font-black text-hb-orange mb-6">15 € <span class="text-sm">/ mois</span></p>
-                        <img src="QR code Stripe Vélo Classique.png" class="mx-auto w-40 shadow-md p-2 bg-white" alt="QR 15">
-                        <p class="mt-4 text-xs text-slate-400 italic">Cliquez pour zoomer</p>
-                    </div>
-                    <div class="card text-center hover:border-hb-orange transition cursor-pointer" onclick="openModal('QR code Stripe Vélo électrique.png')">
-                        <h4 class="font-black text-lg mb-4">VÉLO ÉLECTRIQUE</h4>
-                        <p class="text-4xl font-black text-hb-orange mb-6">25 € <span class="text-sm">/ mois</span></p>
-                        <img src="QR code Stripe Vélo électrique.png" class="mx-auto w-40 shadow-md p-2 bg-white" alt="QR 25E">
-                        <p class="mt-4 text-xs text-slate-400 italic">Cliquez pour zoomer</p>
-                    </div>
-                    <div class="card text-center hover:border-hb-orange transition cursor-pointer" onclick="openModal('QR code Stripe Vélo Cargo.png')">
-                        <h4 class="font-black text-lg mb-4">VÉLO CARGO / LONGTAIL</h4>
-                        <p class="text-4xl font-black text-hb-orange mb-6">25 € <span class="text-sm">/ mois</span></p>
-                        <img src="QR code Stripe Vélo Cargo.png" class="mx-auto w-40 shadow-md p-2 bg-white" alt="QR 25C">
-                        <p class="mt-4 text-xs text-slate-400 italic">Cliquez pour zoomer</p>
-                    </div>
-                </div>
-
-                <div class="bubble">
-                    <h4 class="text-xl font-black mb-4 uppercase">Prestations incluses dans l'abonnement :</h4>
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-body">
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Main d’œuvre illimitée</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Deux révisions complètes par an</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Réparation des crevaisons express</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Prise en charge sans RDV (ou sous 7j)</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Prêt d'un vélo de courtoisie</li>
-                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Pièces d’usure incluses (patins, câbles...)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="abo-stripe" class="card border-l-8 border-hb-blue">
-                <h3 class="text-2xl font-black mb-6 text-hb-blue dark:text-white uppercase">Process d'inscription client</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            <span class="anchor" id="lld-facturation"></span>
+            <div class="bg-blue-50 dark:bg-slate-800 p-6 rounded-xl border-2 border-hb-blue dark:border-slate-600 mb-8 shadow-md mt-8">
+                <h5 class="font-black text-xl mb-4 text-hb-blue dark:text-white"><i class="fas fa-calculator mr-2"></i> Calculateur de commission brut vendeur</h5>
+                <p class="mb-4 text-base">Commission = Durée (mois) × 2 % × (loyer TTC / 1,2)</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
                     <div>
-                        <ol class="space-y-4 text-body">
-                            <li class="flex items-start"><span class="bg-hb-blue text-white w-7 h-7 rounded-full flex items-center justify-center shrink-0 mr-3 mt-1 font-bold">1</span> <span>Le client scanne le QR Code en magasin ou reçoit le lien par email.</span></li>
-                            <li class="flex items-start"><span class="bg-hb-blue text-white w-7 h-7 rounded-full flex items-center justify-center shrink-0 mr-3 mt-1 font-bold">2</span> <span>Il arrive sur la page de paiement Stripe sécurisée.</span></li>
-                            <li class="flex items-start"><span class="bg-hb-blue text-white w-7 h-7 rounded-full flex items-center justify-center shrink-0 mr-3 mt-1 font-bold">3</span> <span>Il saisit ses coordonnées et sa carte bancaire.</span></li>
-                            <li class="flex items-start"><span class="bg-hb-blue text-white w-7 h-7 rounded-full flex items-center justify-center shrink-0 mr-3 mt-1 font-bold">4</span> <span>Dès validation, l'abonnement est actif et le client est débité chaque mois.</span></li>
-                        </ol>
+                        <label class="block font-bold mb-2 text-base">Durée de la LLD :</label>
+                        <select id="calc-mois-lld" class="w-full p-3 border-2 border-slate-300 rounded text-base dark:bg-slate-700 dark:border-slate-500 cursor-pointer">
+                            <option value="" disabled selected>Choisir la durée...</option>
+                            <option value="12">12 mois</option>
+                            <option value="24">24 mois</option>
+                            <option value="36">36 mois</option>
+                        </select>
                     </div>
-                    <div class="text-center">
-                        <img src="Screenshot Stripe Inscription client.png" class="img-zoom mx-auto max-w-md shadow-2xl" onclick="openModal(this.src)" alt="Stripe Screen">
-                        <p class="mt-4 text-sm font-semibold italic text-slate-500">Aperçu de la page client Stripe</p>
+                    <div>
+                        <label class="block font-bold mb-2 text-base">Montant du loyer mensuel TTC (€) :</label>
+                        <input type="number" id="calc-loyer-lld" class="w-full p-3 border-2 border-slate-300 rounded text-base dark:bg-slate-700 dark:border-slate-500" placeholder="Ex: 85.50">
                     </div>
                 </div>
-            </div>
-
-            <div id="abo-verification" class="card border-l-8 border-hb-orange">
-                <h3 class="text-2xl font-black mb-6 text-hb-blue dark:text-white uppercase">Vérification Stripe (Dashboard)</h3>
-                <p class="text-body mb-6">Avant d'appliquer la remise en atelier, vérifiez le statut du client sur Stripe :</p>
-                <div class="text-center">
-                    <a href="https://dashboard.stripe.com/acct_1IG0N5BvkIBC2Tvu/dashboard" target="_blank" class="btn-hb mb-8"><i class="fas fa-search mr-3"></i> Accéder au Dashboard Stripe</a>
-                    <img src="liste clients abonnés.png" class="img-zoom mx-auto max-w-4xl" onclick="openModal(this.src)" alt="Stripe List">
-                </div>
-            </div>
-        </section>
-
-        <section id="assurance" class="section-page">
-            <h2 class="text-4xl font-black mb-8 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Assurance</h2>
-
-            <div id="ass-4mois" class="card border-l-8 border-green-500">
-                <h3 class="text-2xl font-black mb-6 text-hb-blue dark:text-white uppercase">Offre 4 mois d'assurance offerts</h3>
-                <p class="text-body mb-6">Holland Bikes offre les 4 premiers mois d'assurance vol pour tout achat de vélo neuf (musculaire ou électrique). Au-delà, le client peut résilier ou continuer à ses frais.</p>
-                <img src="Image tableau Assurance.png" class="img-zoom mx-auto shadow-lg" onclick="openModal(this.src)" alt="Tableau Assurance">
-                <div class="mt-8 text-center">
-                    <a href="notice-velo-holland-bikes-4-mois.pdf" target="_blank" class="btn-hb"><i class="fas fa-file-pdf mr-3"></i> Télécharger la Notice Complète (PDF)</a>
-                </div>
-            </div>
-
-            <div id="ass-laka" class="card">
-                <h3 class="text-2xl font-black mb-6 text-hb-blue dark:text-white uppercase">Assurance mensuelle Laka</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div class="text-body">
-                        <p class="mb-4">Laka propose une assurance communautaire flexible, sans engagement. Elle couvre le Vol et la Casse accidentelle.</p>
-                        <ul class="space-y-4 mb-6">
-                            <li class="flex items-center"><i class="fas fa-check text-hb-orange mr-3"></i> Zéro engagement : annulation à tout moment.</li>
-                            <li class="flex items-center"><i class="fas fa-check text-hb-orange mr-3"></i> Zéro franchise sur la plupart des sinistres.</li>
-                            <li class="flex items-center"><i class="fas fa-check text-hb-orange mr-3"></i> Prix équitable : basé sur le coût réel des sinistres du mois.</li>
-                        </ul>
-                        <a href="https://laka.co/fr" target="_blank" class="btn-hb bg-black"><i class="fas fa-external-link-alt mr-3"></i> Site Officiel Laka France</a>
-                    </div>
-                    <div id="ass-comparatif">
-                        <img src="Screenshot Assurance Laka comparatif.png" class="img-zoom" onclick="openModal(this.src)" alt="Comparatif Laka">
-                    </div>
+                <div class="mt-6 p-4 bg-white dark:bg-slate-900 rounded-lg border-2 border-dashed border-hb-orange text-center">
+                    <p class="font-bold text-lg">Prime estimée pour le vendeur :</p>
+                    <p id="calc-result-lld" class="text-3xl font-black text-hb-orange mt-2">0.00 € brut</p>
                 </div>
             </div>
         </section>
 
         <section id="partenaires" class="section-page">
-            <h2 class="text-4xl font-black mb-8 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Partenaires de Mobilités</h2>
+            <h2 class="text-3xl font-black mb-6 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Partenaires de Mobilités</h2>
             
-            <p class="text-xl mb-10 text-slate-500 font-medium">Nous travaillons avec les principaux acteurs du leasing vélo pour entreprises et des solutions de paiement mobilité.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
+                
+                <div class="card hover-card flex flex-col items-center text-center !mb-0 border-t-8 border-[#3b82f6]">
+                    <h3 class="text-xl font-bold mb-3 w-full border-b pb-2">Zenride</h3>
+                    <p class="text-sm mb-4 flex-grow">Plateforme de location de vélos de fonction. Intégration B2B.</p>
+                    <button class="btn-hb w-full" onclick="scrollToAnchor('part-zenride')">Voir la procédure</button>
+                </div>
 
-            <div class="partner-grid">
-                <div class="partner-card">
-                    <img src="Logo Zenride.png" alt="Zenride">
-                    <h4 class="font-black mb-2 uppercase text-hb-blue">Zenride</h4>
-                    <p class="text-sm mb-4">Leader français du leasing vélo de fonction.</p>
-                    <a href="https://app.zenride.co/retailer/login" target="_blank" class="btn-hb !py-2 !px-4 !text-xs">Accès Portail</a>
+                <div class="card hover-card flex flex-col items-center text-center !mb-0 border-t-8 border-[#10b981]">
+                    <h3 class="text-xl font-bold mb-3 w-full border-b pb-2">Lease a Bike</h3>
+                    <p class="text-sm mb-4 flex-grow">Solution de leasing vélo d'entreprise tout inclus.</p>
+                    <button class="btn-hb w-full" onclick="scrollToAnchor('part-lease')">Voir la procédure</button>
                 </div>
-                <div class="partner-card">
-                    <img src="Logo Lease a Bike.png" alt="Lease a Bike">
-                    <h4 class="font-black mb-2 uppercase text-hb-blue">Lease a Bike</h4>
-                    <p class="text-sm mb-4">Plateforme de leasing tout-en-un pour salariés.</p>
-                    <a href="https://portal.lease-a-bike.fr/retailer/login" target="_blank" class="btn-hb !py-2 !px-4 !text-xs">Accès Portail</a>
-                </div>
-                <div class="partner-card">
-                    <img src="Logo BeeToGreen.png" alt="BeeToGreen">
-                    <h4 class="font-black mb-2 uppercase text-hb-blue">BeeToGreen</h4>
-                    <p class="text-sm mb-4">Accompagnement mobilité durable en entreprise.</p>
-                    <a href="https://www.beeto-green.com/boutique/login.php" target="_blank" class="btn-hb !py-2 !px-4 !text-xs">Accès Portail</a>
-                </div>
-                <div class="partner-card">
-                    <div class="flex gap-4 mb-4">
-                        <img src="Logo Edenred.png" class="!h-10 !mb-0" alt="Edenred">
-                        <img src="Logo Betterway.png" class="!h-10 !mb-0" alt="Betterway">
-                    </div>
-                    <h4 class="font-black mb-2 uppercase text-hb-blue">Cartes Mobilités</h4>
-                    <p class="text-sm">Edenred, Betterway, Swile... Paiements Forfait Mobilité Durable.</p>
-                </div>
-            </div>
-            
-            <div class="card mt-12 bg-slate-100 dark:bg-slate-800 border-none">
-                <h3 class="text-xl font-black mb-4 uppercase"><i class="fas fa-info-circle mr-3"></i> SNCF Mon Sesam</h3>
-                <p class="text-body">Nous acceptons également les paiements et bons d'achats via le programme <strong>Mon Sesam SNCF</strong> pour l'acquisition de vélos et équipements.</p>
-            </div>
-        </section>
 
-        <section id="reprise" class="section-page">
-            <h2 class="text-4xl font-black mb-8 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Reprise vélo</h2>
-            
-            <div class="card border-l-8 border-hb-blue">
-                <h3 class="text-2xl font-black mb-6 text-hb-blue dark:text-white uppercase">Rachat via Upway B2B</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div class="text-body">
-                        <p class="mb-6">Facilitez l'achat d'un vélo neuf en proposant la reprise de l'ancien vélo électrique de votre client via notre partenaire Upway.</p>
-                        <ul class="space-y-4 mb-8">
-                            <li class="flex items-start"><i class="fas fa-check text-hb-orange mt-1 mr-3"></i> Estimation immédiate sur le portail B2B.</li>
-                            <li class="flex items-start"><i class="fas fa-check text-hb-orange mt-1 mr-3"></i> Enlèvement gratuit en magasin.</li>
-                            <li class="flex items-start"><i class="fas fa-check text-hb-orange mt-1 mr-3"></i> Virement rapide sur le compte du magasin.</li>
-                        </ul>
-                        <a href="https://b2b.upway.app/" target="_blank" class="btn-hb bg-black"><i class="fas fa-bolt mr-3"></i> Accéder au Dashboard Upway B2B</a>
-                    </div>
-                    <div>
-                        <img src="Upway-B2B-Reprise.png" class="img-zoom shadow-lg" onclick="openModal(this.src)" alt="Upway B2B">
-                    </div>
+                <div class="card hover-card flex flex-col items-center text-center !mb-0 border-t-8 border-[#f59e0b]">
+                    <h3 class="text-xl font-bold mb-3 w-full border-b pb-2">BeeToGreen</h3>
+                    <p class="text-sm mb-4 flex-grow">Partenaire pour l'achat subventionné et leasing pro.</p>
+                    <button class="btn-hb w-full" onclick="scrollToAnchor('part-bee')">Voir la procédure</button>
+                </div>
+
+                <div class="card hover-card flex flex-col items-center text-center !mb-0 border-t-8 border-[#8b5cf6]">
+                    <h3 class="text-xl font-bold mb-3 w-full border-b pb-2">Cartes Mobilités</h3>
+                    <p class="text-sm mb-4 flex-grow">Paiements via FMD (Forfait Mobilités Durables).</p>
+                    <button class="btn-hb w-full" onclick="scrollToAnchor('part-cartes')">Voir la procédure</button>
                 </div>
             </div>
         </section>
 
         <section id="clickcollect" class="section-page">
-            <h2 class="text-4xl font-black mb-8 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Click & Collect</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="card border-t-8 border-hb-blue">
-                    <div class="flex justify-between items-start mb-8">
-                        <h3 class="text-2xl font-black text-hb-blue uppercase">Véligo Location</h3>
-                        <img src="Logo Veligo.png" class="h-10" alt="Veligo">
-                    </div>
-                    <div class="text-body space-y-4">
-                        <p>Holland Bikes est partenaire pour la remise et l'entretien des vélos de la flotte régionale Véligo.</p>
-                        <div class="bg-blue-50 dark:bg-slate-800 p-6 rounded-xl border-l-4 border-hb-blue">
-                            <h4 class="font-black text-hb-blue mb-4 uppercase text-sm">Procédures & Ressources :</h4>
-                            <ul class="space-y-3">
-                                <li><a href="#" class="text-hb-blue underline font-bold"><i class="fas fa-video mr-2"></i> Guide Webinar Portail Opérationnel</a></li>
-                                <li><a href="#" class="text-hb-blue underline font-bold"><i class="fas fa-file-pdf mr-2"></i> Synthèse Présentation Service</a></li>
-                            </ul>
-                        </div>
-                        <div class="bg-hb-orange/10 p-6 rounded-xl border-l-4 border-hb-orange">
-                            <p class="font-bold text-hb-orange mb-2">Le levier LLD :</p>
-                            <p>Pour les clients Véligo, présentez la LLD GreenLeaze comme la suite logique pour bénéficier d'un vélo neuf avec la même liberté.</p>
-                        </div>
-                        <a href="https://score-veligo.powerappsportals.com/fr-FR/signin" target="_blank" class="btn-hb w-full mt-4">Accès Dashboard Véligo</a>
+            <h2 class="text-3xl font-black mb-6 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Click & Collect</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
+                <div class="card border-l-8 border-[#009ee0]">
+                    <h3 class="text-2xl font-bold mb-4 text-[#009ee0]">Véligo</h3>
+                    <p class="mb-4">Réception et remise en état des VAE régionaux pour les abonnés Île-de-France Mobilités.</p>
+                    
+                    <div class="bg-blue-50 dark:bg-slate-800 p-4 rounded-lg mt-4 border border-blue-200 dark:border-slate-600">
+                        <p class="font-bold text-hb-blue dark:text-white"><i class="fas fa-lightbulb text-yellow-500 mr-2"></i> Le levier LLD :</p>
+                        <p class="text-sm mt-2">Pour les clients Véligo, présentez la LLD GreenLeaze comme la suite logique pour bénéficier d'un vélo neuf avec la même liberté.</p>
                     </div>
                 </div>
 
-                <div class="card border-t-8 border-black">
-                    <div class="flex justify-between items-start mb-8">
-                        <h3 class="text-2xl font-black uppercase">Livraison Upway</h3>
-                        <img src="Logo Upway.png" class="h-8" alt="Upway">
-                    </div>
-                    <div class="text-body space-y-4">
-                        <p>Gestion des livraisons en magasin pour les clients ayant acheté un vélo reconditionné sur Upway.</p>
-                        <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-xl">
-                            <p class="font-black text-xl mb-2">42 € TTC</p>
-                            <p class="text-sm">Commission forfaitaire par mise en service effectuée.</p>
-                        </div>
-                        <p>Assurez-vous de vérifier l'état du vélo à réception et de contacter le client pour fixer un rendez-vous de remise.</p>
-                        <a href="https://b2b.upway.app/" target="_blank" class="btn-hb bg-black w-full mt-4">Accès Dashboard Upway</a>
-                    </div>
+                <div class="card border-l-8 border-[#ff4747]">
+                    <h3 class="text-2xl font-bold mb-4 text-[#ff4747]">Upway</h3>
+                    <p class="mb-4">Partenaire pour la livraison de vélos reconditionnés achetés en ligne par les clients.</p>
                 </div>
             </div>
         </section>
@@ -554,73 +335,109 @@
     </main>
 
     <script>
-        // NAVIGATION
-        function showSection(id) {
+        // Gestion de l'affichage des sections
+        function showSection(sectionId, element = null) {
             document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            
-            const target = document.getElementById(id);
-            if (target) {
-                target.classList.add('active');
-                const link = document.getElementById('nav-' + id);
-                if (link) link.classList.add('active');
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+            const target = document.getElementById(sectionId);
+            if(target) target.classList.add('active');
 
-        // SIDEBAR TOGGLE
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
-        }
-
-        // SEARCH LIVE
-        function filterSearch() {
-            const input = document.getElementById('liveSearch').value.toLowerCase();
-            const tiles = document.querySelectorAll('.tile-card');
-            
-            // Si on cherche, on s'assure d'être sur l'accueil pour voir les tuiles
-            if (input.length > 0) {
-                const homeSection = document.getElementById('home');
-                if (!homeSection.classList.contains('active')) {
-                    showSection('home');
+            if (element) {
+                document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+                element.classList.add('active');
+                
+                // Fermer tous les sous-menus
+                document.querySelectorAll('.sub-nav').forEach(s => s.style.display = 'none');
+                
+                // Ouvrir le sous-menu cliqué si la barre n'est pas collapsed
+                const sub = element.nextElementSibling;
+                if (sub && sub.classList.contains('sub-nav') && !document.getElementById('sidebar').classList.contains('collapsed')) {
+                    sub.style.display = 'block';
                 }
             }
-
-            tiles.forEach(tile => {
-                const text = tile.textContent.toLowerCase();
-                if (text.includes(input)) {
-                    tile.style.display = "flex";
-                } else {
-                    tile.style.display = "none";
-                }
-            });
+            window.scrollTo(0, 0);
         }
 
-        // DARK MODE
+        // Navigation par ancre
+        function scrollToAnchor(anchorId) {
+            const anchor = document.getElementById(anchorId);
+            if(anchor) {
+                // Trouver la section parente de l'ancre
+                const parentSection = anchor.closest('.section-page');
+                if(parentSection) {
+                    showSection(parentSection.id);
+                }
+                anchor.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Thème Sombre/Clair
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
         }
 
-        // CALCULATEUR LLD
+        // Collapse du Menu Latéral
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+            
+            // Cacher les sous-menus quand on collapse
+            if(sidebar.classList.contains('collapsed')) {
+                document.querySelectorAll('.sub-nav').forEach(s => s.style.display = 'none');
+            } else {
+                // Rouvrir le sous-menu actif quand on dé-collapse
+                const activeNav = document.querySelector('.nav-link.active');
+                if (activeNav) {
+                    const sub = activeNav.nextElementSibling;
+                    if (sub && sub.classList.contains('sub-nav')) sub.style.display = 'block';
+                }
+            }
+        }
+
+        // Recherche en direct (Live Search)
+        function searchLive() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            
+            // Rediriger vers l'accueil pour afficher les tuiles filtrées si on tape quelque chose
+            if(query.length > 0 && !document.getElementById('home').classList.contains('active')) {
+                showSection('home');
+            }
+            
+            const tiles = document.querySelectorAll('#homeTiles .card');
+            tiles.forEach(tile => {
+                const keywords = tile.getAttribute('data-search').toLowerCase();
+                const title = tile.querySelector('h3').innerText.toLowerCase();
+                
+                if (keywords.includes(query) || title.includes(query)) {
+                    tile.style.display = 'block';
+                } else {
+                    tile.style.display = 'none';
+                }
+            });
+        }
+
+        // Calculateur LLD
         const inputCalcMoisLld = document.getElementById('calc-mois-lld');
         const inputCalcLoyerLld = document.getElementById('calc-loyer-lld');
         const calcResultLld = document.getElementById('calc-result-lld');
 
         function updateCalcLld() {
+            if(!inputCalcMoisLld || !inputCalcLoyerLld || !calcResultLld) return;
             const mois = parseInt(inputCalcMoisLld.value);
             const loyer = parseFloat(inputCalcLoyerLld.value);
             if (!isNaN(mois) && !isNaN(loyer)) {
-                // Commission = Durée (mois) × 2 % × (loyer TTC / 1,2)
                 const res = mois * 0.02 * (loyer / 1.2);
-                calcResultLld.innerText = res.toFixed(2) + " € brut";
+                calcResultLld.innerText = res.toFixed(2) + ' € brut';
             } else {
-                calcResultLld.innerText = "0.00 € brut";
+                calcResultLld.innerText = '0.00 € brut';
             }
         }
-        inputCalcMoisLld.addEventListener('change', updateCalcLld);
-        inputCalcLoyerLld.addEventListener('input', updateCalcLld);
 
-        // MODAL
+        if(inputCalcMoisLld) inputCalcMoisLld.addEventListener('change', updateCalcLld);
+        if(inputCalcLoyerLld) inputCalcLoyerLld.addEventListener('input', updateCalcLld);
+
+        // Modal Image
         function openModal(src) {
             document.getElementById('modalImg').src = src;
             document.getElementById('imgModal').style.display = 'flex';
