@@ -8,16 +8,50 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        hb: { blue: '#003366', orange: '#E65A28', 'dark-bg': '#0a192f', 'dark-card': '#112240', 'dark-text': '#e6f1ff' }
-                    }
-                }
+    // 1. CONFIGURATION DU MOT DE PASSE
+    const PASSWORD = "HB2026"; // Tu peux modifier le code ici
+
+    // 2. VÉRIFICATION IMMÉDIATE (S'exécute avant l'affichage)
+    (function checkAuth() {
+        if (localStorage.getItem('hb_auth') !== 'true') {
+            // On cache tout le contenu par sécurité
+            document.body.style.display = 'none';
+            
+            let promptPass = prompt("Accès réservé - Veuillez saisir le code d'accès Holland Bikes :");
+            
+            if (promptPass === PASSWORD) {
+                localStorage.setItem('hb_auth', 'true');
+                document.body.style.display = 'block';
+            } else {
+                alert("Code incorrect.");
+                window.location.href = "https://www.hollandbikes.com"; 
             }
         }
+    })();
+
+    // 3. TES FONCTIONS (Laisse la suite de ton code ici)
+    function toggleSidebar() {
+        const s = document.getElementById('sidebar');
+        const m = document.getElementById('mainContent');
+        const h = document.getElementById('topHeader');
+        s.classList.toggle('expanded');
+        m.classList.toggle('expanded');
+        h.classList.toggle('expanded');
+    }
+
+    function showSection(id, el) {
+        document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        if(el) el.classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    function toggleTheme() {
+        document.documentElement.classList.toggle('dark');
+    }
+    
+    // ... (garde le reste de tes fonctions habituelles ici)
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
