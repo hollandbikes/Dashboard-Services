@@ -3,55 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Services Holland Bikes</title>
+    <title>Dashboard Services Holland Bikes 2026</title>
     <link rel="icon" type="image/png" href="flavicon-hollandbikes.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
-    // 1. CONFIGURATION DU MOT DE PASSE
-    const PASSWORD = "HB2026"; // Tu peux modifier le code ici
-
-    // 2. VÉRIFICATION IMMÉDIATE (S'exécute avant l'affichage)
-    (function checkAuth() {
-        if (localStorage.getItem('hb_auth') !== 'true') {
-            // On cache tout le contenu par sécurité
-            document.body.style.display = 'none';
-            
-            let promptPass = prompt("Accès réservé - Veuillez saisir le code d'accès Holland Bikes :");
-            
-            if (promptPass === PASSWORD) {
-                localStorage.setItem('hb_auth', 'true');
-                document.body.style.display = 'block';
-            } else {
-                alert("Code incorrect.");
-                window.location.href = "https://www.hollandbikes.com"; 
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        hb: { blue: '#003366', orange: '#E65A28', 'dark-bg': '#0a192f', 'dark-card': '#112240', 'dark-text': '#e6f1ff' }
+                    }
+                }
             }
         }
-    })();
-
-    // 3. TES FONCTIONS (Laisse la suite de ton code ici)
-    function toggleSidebar() {
-        const s = document.getElementById('sidebar');
-        const m = document.getElementById('mainContent');
-        const h = document.getElementById('topHeader');
-        s.classList.toggle('expanded');
-        m.classList.toggle('expanded');
-        h.classList.toggle('expanded');
-    }
-
-    function showSection(id, el) {
-        document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        if(el) el.classList.add('active');
-        window.scrollTo(0,0);
-    }
-
-    function toggleTheme() {
-        document.documentElement.classList.toggle('dark');
-    }
-    
-    // ... (garde le reste de tes fonctions habituelles ici)
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap');
@@ -300,8 +266,8 @@
 
         <!-- =============================== HOME =============================== -->
         <section id="home" class="section-page">
-            <h1 class="text-4xl font-black mb-8 text-hb-blue dark:text-white">Dashboard Services Holland Bikes</h1>
-            <p class="text-xl mb-12 text-slate-600 dark:text-slate-400">Bienvenue sur le tableau de bord des services Holland Bikes. Sélectionnez une section pour commencer :</p>
+            <h1 class="text-4xl font-black mb-8 text-hb-blue dark:text-white">Dashboard Services Holland Bikes 2026</h1>
+            <p class="text-xl mb-12 text-slate-600 dark:text-slate-400">Bienvenue sur votre tableau de bord. Sélectionnez une section pour commencer :</p>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="home-tile" onclick="showSectionFromHome('lld')">
@@ -415,7 +381,8 @@
                     <li>Vélo cargo : 10,50 €/mois</li>
                 </ul>
                 <div class="text-red-600 dark:text-red-500 font-bold text-base p-5 border-4 border-red-600 dark:border-red-500 rounded-lg bg-red-50 dark:bg-red-900/20">
-                    <p class="mb-2"><strong>Important :</strong> Les révisions incluses dans ces forfaits en option ne sont pas facturées sur la facture de vente du vélo à GreenLeaze. Lorsqu'un client effectue une révision, l'atelier doit facturer cette prestation séparément, directement à GreenLeaze.</p>
+                    <p class="mb-2"><strong>Important :</strong> Les révisions incluses dans ces forfaits en option ne sont pas intégrées dans le loyer GreenLeaze. Lorsqu'un client effectue une révision, l'atelier doit facturer cette prestation séparément, directement à GreenLeaze.</p>
+                    <p><strong>Accessoires :</strong> à facturer séparément, avec un code promo 10 % à usage unique.</p>
                 </div>
             </div>
 
