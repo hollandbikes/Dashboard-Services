@@ -927,29 +927,48 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
                 <!-- BeeToGreen -->
-                <div class="partner-card">
-                    <span class="anchor" id="part-bee"></span>
-                    <img src="Logo BeeToGreen.png" alt="Logo BeeToGreen" class="partner-card-logo">
-                    <h3 class="partner-card-title">BeeToGreen</h3>
-                    <a href="https://app.beetogreen.com/login" target="_blank" class="btn-hb mb-4 inline-block"><i class="fas fa-desktop mr-2"></i> Dashboard BeeToGreen</a>
-                    <div class="text-base space-y-4 text-body">
-                        <p><strong>Présentation :</strong> BeeToGreen est un opérateur de solutions de mobilité durable. Les salariés peuvent acheter ou louer un vélo via leur entreprise.</p>
-                        <h4 class="font-black text-base mt-4">Processus :</h4>
-                        <ol class="list-decimal ml-7 space-y-2">
-                            <li>Le salarié se présente avec une attestation BeeToGreen ou une demande de devis.</li>
-                            <li>Le vendeur établit un devis au nom de BeeToGreen.</li>
-                            <li>Envoyer le devis à BeeToGreen (ou attendre le bon de commande via leur interface).</li>
-                            <li>Après validation : facturer BeeToGreen et livrer le vélo au salarié.</li>
-                        </ol>
-                        <div class="bg-green-50 dark:bg-slate-800 p-5 rounded-xl mt-4 border-2 border-green-500">
-                            <h4 class="font-black text-base mb-3 text-green-700 dark:text-green-400">Bon à savoir :</h4>
-                            <ul class="list-disc ml-7 space-y-1 font-bold text-sm">
-                                <li>Aucun paiement du salarié en magasin.</li>
-                                <li>Vérifier systématiquement que le bon de commande BeeToGreen est reçu avant la remise du vélo.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+<div class="partner-card">
+    <span class="anchor" id="part-bee"></span>
+    <img src="Logo BeeToGreen.png" alt="Logo BeeToGreen" class="partner-card-logo">
+    <h3 class="partner-card-title">BeeToGreen</h3>
+    <a href="https://app.beetogreen.com/login" target="_blank" class="btn-hb mb-4 inline-block"><i class="fas fa-desktop mr-2"></i> Dashboard BeeToGreen</a>
+    <div class="text-base space-y-4 text-body">
+        <p><strong>Présentation :</strong> BeeToGreen est un opérateur de solutions de mobilité durable. Les salariés peuvent acheter ou louer un vélo via leur entreprise.</p>
+        
+        <h4 class="font-black text-base mt-4">Processus et Facturation :</h4>
+        
+        <div class="space-y-4">
+            <div class="border-l-4 border-orange-400 pl-4">
+                <h5 class="font-bold text-[15px] uppercase">📦 Commande B2C — Achat Marketplace</h5>
+                <p class="text-sm mt-1">La vente est juridiquement entre le magasin et le client final. BeeToGreen n'est qu'intermédiaire.</p>
+                <ul class="list-disc ml-5 mt-2 space-y-1 text-sm">
+                    <li>Facture à établir <strong>au nom du client final</strong> (surtout pas à BeeToGreen).</li>
+                    <li>Indiquer le <strong>montant total TTC</strong> réglé par le client.</li>
+                    <li><strong class="text-red-600 dark:text-red-400">Important :</strong> Ne pas déduire ni faire apparaître la commission BeeToGreen sur la facture du client.</li>
+                    <li>Transmettre la facture au client s'il en fait la demande.</li>
+                </ul>
+            </div>
+
+            <div class="border-l-4 border-blue-400 pl-4 mt-4">
+                <h5 class="font-bold text-[15px] uppercase">📋 Commande B2B — (Location)</h5>
+                <p class="text-sm mt-1">BeeToGreen achète le vélo pour le louer au client. La transaction se fait entre le magasin et BeeToGreen.</p>
+                <ul class="list-disc ml-5 mt-2 space-y-1 text-sm">
+                    <li>Facture à adresser <strong>à BeeToGreen</strong> (et non au client final).</li>
+                    <li>La remise/commission BeeToGreen <strong>doit être visible</strong> sur la facture.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bg-green-50 dark:bg-slate-800 p-5 rounded-xl mt-4 border-2 border-green-500">
+            <h4 class="font-black text-base mb-3 text-green-700 dark:text-green-400">Bon à savoir :</h4>
+            <ul class="list-disc ml-7 space-y-1 font-bold text-sm">
+                <li>Vérifier systématiquement le type de commande (B2C ou B2B) pour appliquer la bonne règle de facturation.</li>
+                <li>Pour le B2C, la commission BeeToGreen est gérée séparément via un appel à facture de leur part (ce qui justifie l'écart entre le montant facturé au client et le reversement).</li>
+                <li>Vérifier que le bon de commande BeeToGreen est reçu avant la remise du vélo.</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
                 <!-- Lease a Bike -->
                 <div class="partner-card">
