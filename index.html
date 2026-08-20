@@ -133,6 +133,43 @@
         .sidebar-contact { display: none; padding: 20px; background: #f8fafc; border-top: 1px solid #e2e8f0; margin-top: auto; }
         .sidebar.expanded .sidebar-contact { display: block; }
         .dark .sidebar-contact { background: #0d1f3c; border-top-color: #233554; }
+
+.rep-list{display:flex;flex-direction:column;gap:8px;}
+.rep-link{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:11px;background:#fff;border:1.5px solid #e2e8f0;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;}
+.dark .rep-link{background:#112240;border-color:#233554;}
+.rep-link:hover{border-color:var(--accent);box-shadow:0 6px 14px rgba(0,0,0,.08);transform:translateY(-1px);}
+.rep-link.rep-primary{background:var(--accent-soft);border-color:var(--accent);}
+.dark .rep-link.rep-primary{background:#1e293b;border-color:var(--accent);}
+.rep-icon{flex:0 0 auto;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--accent-soft);}
+.dark .rep-icon{background:#1e293b;}
+.rep-link.rep-primary .rep-icon{background:#fff;}
+.dark .rep-link.rep-primary .rep-icon{background:#0d1f3c;}
+.rep-icon i{color:var(--accent);font-size:14px;}
+.rep-label{flex:1;font-weight:700;font-size:14px;color:#182B3A;line-height:1.3;}
+.dark .rep-label{color:#e6f1ff;}
+.rep-chevron{flex:0 0 auto;font-size:12px;opacity:.45;color:#182B3A;}
+.dark .rep-chevron{color:#e6f1ff;}
+.rep-note{background:#ffedd5;border:1.5px solid #E65A28;border-radius:11px;padding:12px 14px;margin-bottom:16px;}
+.dark .rep-note{background:#1e293b;}
+.rep-note p{margin:0;font-size:12.5px;font-weight:500;color:#182B3A;line-height:1.5;}
+.dark .rep-note p{color:#e6f1ff;}
+.rep-intro{font-size:13.5px;color:#182B3A;line-height:1.5;margin:0 0 14px;}
+.dark .rep-intro{color:#94a3b8;}
+
+/* Reprise diagram card */
+.rd-diagram-toggle{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;cursor:pointer;}
+.rd-diagram .rd-box-fill{transition:fill .2s;}
+.dark .rd-diagram .rd-box-fill{fill:#1e293b !important;}
+.dark .rd-diagram .rd-box-text{fill:#e6f1ff !important;}
+.dark .rd-diagram .rd-muted-text{fill:#94a3b8 !important;}
+.dark .rd-diagram .rd-arrow{stroke:#94a3b8 !important;}
+.dark .rd-diagram .rd-arrow-fill{fill:#94a3b8 !important;}
+#rdModal{display:none;position:fixed;inset:0;background:rgba(10,25,47,.78);z-index:9999;align-items:center;justify-content:center;padding:24px;}
+#rdModal .rd-modal-box{background:#fff;border-radius:16px;padding:32px;max-width:96vw;max-height:92vh;overflow:auto;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.35);}
+.dark #rdModal .rd-modal-box{background:#112240;}
+#rd-close-btn{position:absolute;top:14px;right:14px;background:#f1f5f9;border:none;border-radius:8px;width:36px;height:36px;font-size:20px;font-weight:800;color:#182B3A;cursor:pointer;line-height:1;}
+.dark #rd-close-btn{background:#233554;color:#e6f1ff;}
+
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-hb-dark-bg text-slate-800 dark:text-hb-dark-text">
@@ -1002,29 +1039,99 @@
                 <p class="mb-3">Nous proposons en magasin une offre de reprise de vélos lors de l'achat d'un vélo neuf, afin de faciliter la décision d'achat des clients et de donner une seconde vie aux vélos repris.</p>
                 <p>Cette reprise peut concerner des vélos électriques (VAE) ou des vélos mécaniques. La procédure à suivre est différente selon le type de vélo.</p>
             </div>
+
+            <div class="card p-8 shadow-xl mb-10">
+                <div class="flex items-center justify-between flex-wrap gap-3 mb-5 border-b-2 border-slate-200 dark:border-slate-700 pb-3">
+                    <h3 class="text-xl font-black text-hb-blue dark:text-white" style="margin:0;">Vue d'ensemble du processus de reprise</h3>
+                    <button type="button" id="rd-zoom-btn" class="btn-hb rd-diagram-toggle">
+                        <i class="fas fa-search-plus"></i> Agrandir le schéma
+                    </button>
+                </div>
+                <div id="rd-inline-holder" class="rd-diagram" style="overflow-x:auto;padding-bottom:8px;">
+<svg id="reprise-diagram-svg" viewBox="0 0 1510 500" width="100%" style="display:block;max-width:1510px;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schema du processus de reprise velo en magasin">
+<defs><marker id="arrowhead" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path class="rd-arrow-fill" d="M0,0 L8,4 L0,8 Z" fill="#334155"/></marker></defs>
+<rect class="rd-box-fill" x="10" y="160" width="190" height="210" rx="16" fill="#ffffff" stroke="#003366" stroke-width="2.5"/>
+<text class="rd-box-text" text-anchor="middle" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:17px;font-weight:800;fill:#003366;"><tspan x="105.0" y="260.4">Demande de reprise</tspan><tspan x="105.0" y="281.4">en magasin</tspan></text>
+<rect x="370" y="65" width="220" height="110" rx="16" fill="#003366"/>
+<rect class="rd-box-fill" x="370" y="73" width="220" height="102" rx="12" fill="#ffffff"/>
+<text class="rd-box-text" text-anchor="middle" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;font-weight:800;fill:#182B3A;"><tspan x="480.0" y="115.1">Estimation B2B</tspan><tspan x="480.0" y="136.1">Upway</tspan></text>
+<rect x="370" y="355" width="220" height="110" rx="16" fill="#E65A28"/>
+<rect class="rd-box-fill" x="370" y="363" width="220" height="102" rx="12" fill="#ffffff"/>
+<text class="rd-box-text" text-anchor="middle" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;font-weight:800;fill:#182B3A;"><tspan x="480.0" y="405.1">Estimation</tspan><tspan x="480.0" y="426.1">calculateur HB</tspan></text>
+<rect x="655" y="65" width="280" height="110" rx="16" fill="#003366"/>
+<rect class="rd-box-fill" x="655" y="73" width="280" height="102" rx="12" fill="#ffffff"/>
+<text class="rd-box-text" text-anchor="middle" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:15px;font-weight:800;fill:#182B3A;"><tspan x="795.0" y="114.8">Envoi mail EBSC</tspan><tspan x="795.0" y="135.8">(prix de reprise Upway)</tspan></text>
+<rect x="655" y="355" width="280" height="110" rx="16" fill="#E65A28"/>
+<rect class="rd-box-fill" x="655" y="363" width="280" height="102" rx="12" fill="#ffffff"/>
+<text class="rd-box-text" text-anchor="middle" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:15px;font-weight:800;fill:#182B3A;"><tspan x="795.0" y="404.8">Transfert EBSC pour</tspan><tspan x="795.0" y="425.8">reconditionnement</tspan></text>
+<rect x="1000" y="65" width="220" height="110" rx="16" fill="#003366"/>
+<rect class="rd-box-fill" x="1000" y="73" width="220" height="102" rx="12" fill="#ffffff"/>
+<text class="rd-box-text" text-anchor="middle" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:15px;font-weight:800;fill:#182B3A;"><tspan x="1110.0" y="114.8">Validation de l’offre</tspan><tspan x="1110.0" y="135.8">+ envoi à Upway</tspan></text>
+<rect class="rd-box-fill" x="1285" y="160" width="210" height="210" rx="16" fill="#ffffff" stroke="#003366" stroke-width="2.5"/>
+<text class="rd-box-text" text-anchor="middle" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:15px;font-weight:800;fill:#003366;"><tspan x="1390.0" y="259.8">Édition d’un bon d’achat</tspan><tspan x="1390.0" y="280.8">pour un vélo neuf</tspan></text>
+<path class="rd-arrow" d="M200,265 L350,265 L350,120 L370,120" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+<path class="rd-arrow" d="M200,265 L350,265 L350,410 L370,410" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+<text class="rd-muted-text" x="275.0" y="251" text-anchor="middle" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:13px;fill:#64748B;font-style:italic;">estimation en ligne</text>
+<text class="rd-box-text" x="360" y="96" text-anchor="end" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:14px;font-weight:800;fill:#003366;">VAE</text>
+<text x="360" y="444" text-anchor="end" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:14px;font-weight:800;fill:#E65A28;">Vélo mécanique</text>
+<path class="rd-arrow" d="M590,120 L655,120" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+<text class="rd-muted-text" x="622.5" y="95" text-anchor="middle" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:11px;fill:#64748B;font-style:italic;"><tspan x="622.5" dy="0">si accepté</tspan><tspan x="622.5" dy="14">par le client</tspan></text>
+<path class="rd-arrow" d="M590,410 L655,410" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+<text class="rd-muted-text" x="622.5" y="385" text-anchor="middle" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:11px;fill:#64748B;font-style:italic;"><tspan x="622.5" dy="0">si accepté</tspan><tspan x="622.5" dy="14">par le client</tspan></text>
+<path class="rd-arrow" d="M935,120 L1000,120" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+<text class="rd-muted-text" x="967.5" y="41" text-anchor="middle" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;fill:#64748B;font-style:italic;"><tspan x="967.5" dy="0">si pas accepté par EBSC</tspan><tspan x="967.5" dy="15">pour reconditionnement</tspan></text>
+<path class="rd-arrow" d="M795.0,175 L795.0,355" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+<text class="rd-muted-text" x="817.0" y="257.0" text-anchor="start" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;fill:#64748B;font-style:italic;"><tspan x="817.0" dy="0">si accepté par EBSC</tspan><tspan x="817.0" dy="15">pour reconditionnement</tspan></text>
+<path class="rd-arrow" d="M1220,120 L1252,120 L1252,265 L1285,265" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+<path class="rd-arrow" d="M935,410 L1185,410 L1185,265 L1285,265" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+</svg>
+                </div>
+            </div>
+
+            <div id="rdModal">
+                <div class="rd-modal-box">
+                    <button type="button" id="rd-close-btn" aria-label="Fermer">&times;</button>
+                    <h3 class="text-xl font-black text-hb-blue dark:text-white" style="margin:0 40px 20px 0;">Vue d'ensemble du processus de reprise</h3>
+                    <div id="rd-modal-holder" class="rd-diagram"></div>
+                </div>
+            </div>
+
             <!-- ✅ CHANGE 5 : Deux cartes côte à côte (anchors déplacées à l'intérieur des cartes) -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="card p-8 border-t-8 border-hb-blue shadow-xl">
                     <span class="anchor" id="rep-electrique"></span>
-                    <h3 class="text-xl font-black mb-5 text-hb-blue dark:text-white border-b-2 pb-3">Reprise vélos électriques (via Upway)</h3>
-                    <div class="text-base space-y-4 text-body">
-                        <p class="font-bold">Accédez au dashboard Upway :</p>
-                        <a href="https://b2b.upway.app/" target="_blank" class="btn-hb w-full text-center"><i class="fas fa-desktop mr-2"></i> Dashboard Upway</a>
-                        <p class="font-bold mt-2">Voir la procédure de reprise avec Upway :</p>
-                        <a href="https://docs.google.com/document/u/0/d/1oWZDF-55mnysoBn533sUWIcrmj64x7mpLuYJzv1q_2Y/edit" target="_blank" class="btn-hb w-full text-center"><i class="fas fa-file-alt mr-2"></i> Procédure reprise Upway</a>
+                    <h3 class="text-xl font-black mb-4 text-hb-blue dark:text-white border-b-2 pb-3">Reprise vélos électriques (via Upway)</h3>
+                    <p class="rep-intro">La tarification des vélos repris se fait grâce à l'outil de notre partenaire Upway.</p>
+                    <div class="rep-list" style="--accent:#003366;--accent-soft:#eff6ff;">
+                        <a href="https://b2b.upway.app/" target="_blank" class="rep-link rep-primary">
+                            <span class="rep-icon"><i class="fas fa-desktop"></i></span>
+                            <span class="rep-label">Dashboard Upway</span>
+                            <i class="fas fa-arrow-up-right-from-square rep-chevron"></i>
+                        </a>
+                        <a href="https://docs.google.com/document/u/0/d/1oWZDF-55mnysoBn533sUWIcrmj64x7mpLuYJzv1q_2Y/edit" target="_blank" class="rep-link">
+                            <span class="rep-icon"><i class="fas fa-file-alt"></i></span>
+                            <span class="rep-label">Procédure reprise Upway</span>
+                            <i class="fas fa-arrow-up-right-from-square rep-chevron"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="card p-8 border-t-8 border-hb-orange shadow-xl bg-slate-50 dark:bg-slate-900">
                     <span class="anchor" id="rep-mecanique"></span>
-                    <h3 class="text-xl font-black mb-5 text-hb-orange border-b-2 border-slate-200 dark:border-slate-700 pb-3">Reprise vélos mécaniques</h3>
-                    <div class="text-base space-y-4 text-body">
-                        <p class="font-bold">Pour estimer le tarif de reprise, utilisez cet outil :</p>
-                        <a href="https://hollandbikes.github.io/reprise-velo-mecanique/" target="_blank" class="btn-hb bg-hb-orange hover:bg-orange-600 w-full text-center"><i class="fas fa-calculator mr-2"></i> Calculateur reprise vélo mécanique</a>
-                        <p class="font-bold mt-2">Voir la procédure à suivre :</p>
-                        <a href="https://docs.google.com/document/u/0/d/11-49ROBzKyVPC0UHN13OYHFiUMuVrlBkncL97le9RHM/edit" target="_blank" class="btn-hb w-full text-center"><i class="fas fa-file-alt mr-2"></i> Procédure reprise vélos mécaniques</a>
-                        <div class="bg-orange-100 dark:bg-slate-800 p-5 rounded-lg mt-4 border border-hb-orange">
-                            <p class="text-sm font-medium leading-relaxed">Pour les vélos mécaniques, la revente à Upway n'est pas possible. Chaque magasin doit reprendre le vélo, envoyer les informations à l'EBSC pour validation, puis expédier le vélo à l'EBSC pour reconditionnement et mise en ligne.</p>
-                        </div>
+                    <h3 class="text-xl font-black mb-4 text-hb-orange border-b-2 border-slate-200 dark:border-slate-700 pb-3">Reprise vélos mécaniques</h3>
+                    <div class="rep-note">
+                        <p>Pour les vélos mécaniques, la revente à Upway n'est pas possible. Chaque magasin doit reprendre le vélo, envoyer les informations à l'EBSC pour validation, puis expédier le vélo à l'EBSC pour reconditionnement et mise en ligne.</p>
+                    </div>
+                    <div class="rep-list" style="--accent:#E65A28;--accent-soft:#ffedd5;">
+                        <a href="https://hollandbikes.github.io/reprise-velo-mecanique/" target="_blank" class="rep-link rep-primary">
+                            <span class="rep-icon"><i class="fas fa-calculator"></i></span>
+                            <span class="rep-label">Calculateur reprise vélo mécanique</span>
+                            <i class="fas fa-arrow-up-right-from-square rep-chevron"></i>
+                        </a>
+                        <a href="https://docs.google.com/document/u/0/d/11-49ROBzKyVPC0UHN13OYHFiUMuVrlBkncL97le9RHM/edit" target="_blank" class="rep-link">
+                            <span class="rep-icon"><i class="fas fa-file-alt"></i></span>
+                            <span class="rep-label">Procédure reprise vélos mécaniques</span>
+                            <i class="fas fa-arrow-up-right-from-square rep-chevron"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1240,6 +1347,35 @@
                 }
             }
         });
+    </script>
+    <script>
+    (function(){
+        var btn = document.getElementById('rd-zoom-btn');
+        var closeBtn = document.getElementById('rd-close-btn');
+        var modal = document.getElementById('rdModal');
+        var inlineHolder = document.getElementById('rd-inline-holder');
+        var modalHolder = document.getElementById('rd-modal-holder');
+        var svgEl = document.getElementById('reprise-diagram-svg');
+        if (!btn || !modal || !svgEl) return;
+        function openModal(){
+            modalHolder.appendChild(svgEl);
+            svgEl.style.maxWidth = 'none';
+            svgEl.style.width = '1500px';
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal(){
+            svgEl.style.width = '100%';
+            svgEl.style.maxWidth = '1510px';
+            inlineHolder.appendChild(svgEl);
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+        btn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && modal.style.display !== 'none') closeModal(); });
+    })();
     </script>
 </body>
 </html>
