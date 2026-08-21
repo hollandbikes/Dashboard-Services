@@ -170,6 +170,20 @@
 #rd-close-btn{position:absolute;top:14px;right:14px;background:#f1f5f9;border:none;border-radius:8px;width:36px;height:36px;font-size:20px;font-weight:800;color:#182B3A;cursor:pointer;line-height:1;}
 .dark #rd-close-btn{background:#233554;color:#e6f1ff;}
 
+/* Formation Services - slide viewer */
+#slide-viewport{position:relative;}
+.slide-img{display:none;width:100%;height:auto;border-radius:10px;cursor:zoom-in;}
+.slide-img.active{display:block;}
+.slide-nav-btn{background:#003366;color:#fff;border:none;padding:12px 20px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;}
+.slide-nav-btn:hover{background:#E65A28;}
+.slide-nav-btn:disabled{opacity:.4;cursor:not-allowed;}
+.slide-counter{font-weight:800;font-size:15px;color:#003366;min-width:90px;text-align:center;}
+.dark .slide-counter{color:#e6f1ff;}
+.slide-thumbs{display:flex;gap:6px;overflow-x:auto;padding:14px 2px 2px;margin-top:14px;}
+.slide-thumb{flex:0 0 auto;width:64px;height:36px;object-fit:cover;border-radius:5px;border:2px solid transparent;cursor:pointer;opacity:.55;transition:.15s;}
+.slide-thumb:hover{opacity:1;}
+.slide-thumb.active{opacity:1;border-color:#E65A28;}
+
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-hb-dark-bg text-slate-800 dark:text-hb-dark-text">
@@ -262,6 +276,11 @@
                     <div class="sub-nav-link" onclick="scrollToAnchor('cc-veligo')"><i class="fas fa-circle-dot"></i> Véligo</div>
                     <div class="sub-nav-link" onclick="scrollToAnchor('cc-upway')"><i class="fas fa-circle-dot"></i> Upway</div>
                 </div>
+                <!-- Formation Services -->
+                <div class="nav-link" onclick="showSection('formation', this)">
+                    <i class="fas fa-graduation-cap text-2xl"></i>
+                    <span class="nav-text">Formation Services</span>
+                </div>
             </nav>
             <div class="sidebar-contact">
                 <p class="font-bold text-base mb-2 text-hb-blue dark:text-white">Contact :</p>
@@ -314,6 +333,12 @@
                     <i class="fas fa-box-open home-tile-icon"></i>
                     <h3 class="home-tile-title">Click & Collect</h3>
                     <p class="home-tile-desc">Services Véligo et Upway, procédures et opportunités commerciales</p>
+                </div>
+
+                <div class="home-tile" onclick="showSectionFromHome('formation')">
+                    <i class="fas fa-graduation-cap home-tile-icon"></i>
+                    <h3 class="home-tile-title">Formation Services</h3>
+                    <p class="home-tile-desc">Support de formation complet : LLD, abonnements, assurance, partenaires et reprise</p>
                 </div>
             </div>
         </section>
@@ -1221,6 +1246,140 @@
                 </div>
             </div>
         </section>
+        <!-- =============================== FORMATION SERVICES =============================== -->
+        <section id="formation" class="section-page">
+            <h2 class="text-3xl font-black mb-6 text-hb-blue dark:text-white border-b-4 border-hb-orange inline-block pb-2">Formation Services</h2>
+            <p class="text-lg mb-8 text-slate-600 dark:text-slate-400">Support de formation "Onboarding Services Holland Bikes 2026" : récap et argumentaires de vente pour la LLD, l'abonnement entretien, l'assurance, les partenaires de mobilités, la reprise vélo et le Click & Collect.</p>
+            <div class="card p-6 shadow-xl">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
+                    <button type="button" id="slide-prev" class="slide-nav-btn" onclick="changeSlide(-1)"><i class="fas fa-chevron-left mr-2"></i> Précédent</button>
+                    <span class="slide-counter" id="slide-counter">1 / 57</span>
+                    <button type="button" id="slide-next" class="slide-nav-btn" onclick="changeSlide(1)">Suivant <i class="fas fa-chevron-right ml-2"></i></button>
+                </div>
+                <div id="slide-viewport" class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-900">
+                        <img src="formation-services/slide-01.jpg" class="slide-img active" data-index="1" loading="eager" alt="Slide 1" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-02.jpg" class="slide-img" data-index="2" loading="lazy" alt="Slide 2" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-03.jpg" class="slide-img" data-index="3" loading="lazy" alt="Slide 3" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-04.jpg" class="slide-img" data-index="4" loading="lazy" alt="Slide 4" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-05.jpg" class="slide-img" data-index="5" loading="lazy" alt="Slide 5" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-06.jpg" class="slide-img" data-index="6" loading="lazy" alt="Slide 6" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-07.jpg" class="slide-img" data-index="7" loading="lazy" alt="Slide 7" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-08.jpg" class="slide-img" data-index="8" loading="lazy" alt="Slide 8" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-09.jpg" class="slide-img" data-index="9" loading="lazy" alt="Slide 9" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-10.jpg" class="slide-img" data-index="10" loading="lazy" alt="Slide 10" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-11.jpg" class="slide-img" data-index="11" loading="lazy" alt="Slide 11" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-12.jpg" class="slide-img" data-index="12" loading="lazy" alt="Slide 12" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-13.jpg" class="slide-img" data-index="13" loading="lazy" alt="Slide 13" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-14.jpg" class="slide-img" data-index="14" loading="lazy" alt="Slide 14" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-15.jpg" class="slide-img" data-index="15" loading="lazy" alt="Slide 15" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-16.jpg" class="slide-img" data-index="16" loading="lazy" alt="Slide 16" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-17.jpg" class="slide-img" data-index="17" loading="lazy" alt="Slide 17" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-18.jpg" class="slide-img" data-index="18" loading="lazy" alt="Slide 18" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-19.jpg" class="slide-img" data-index="19" loading="lazy" alt="Slide 19" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-20.jpg" class="slide-img" data-index="20" loading="lazy" alt="Slide 20" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-21.jpg" class="slide-img" data-index="21" loading="lazy" alt="Slide 21" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-22.jpg" class="slide-img" data-index="22" loading="lazy" alt="Slide 22" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-23.jpg" class="slide-img" data-index="23" loading="lazy" alt="Slide 23" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-24.jpg" class="slide-img" data-index="24" loading="lazy" alt="Slide 24" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-25.jpg" class="slide-img" data-index="25" loading="lazy" alt="Slide 25" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-26.jpg" class="slide-img" data-index="26" loading="lazy" alt="Slide 26" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-27.jpg" class="slide-img" data-index="27" loading="lazy" alt="Slide 27" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-28.jpg" class="slide-img" data-index="28" loading="lazy" alt="Slide 28" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-29.jpg" class="slide-img" data-index="29" loading="lazy" alt="Slide 29" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-30.jpg" class="slide-img" data-index="30" loading="lazy" alt="Slide 30" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-31.jpg" class="slide-img" data-index="31" loading="lazy" alt="Slide 31" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-32.jpg" class="slide-img" data-index="32" loading="lazy" alt="Slide 32" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-33.jpg" class="slide-img" data-index="33" loading="lazy" alt="Slide 33" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-34.jpg" class="slide-img" data-index="34" loading="lazy" alt="Slide 34" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-35.jpg" class="slide-img" data-index="35" loading="lazy" alt="Slide 35" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-36.jpg" class="slide-img" data-index="36" loading="lazy" alt="Slide 36" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-37.jpg" class="slide-img" data-index="37" loading="lazy" alt="Slide 37" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-38.jpg" class="slide-img" data-index="38" loading="lazy" alt="Slide 38" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-39.jpg" class="slide-img" data-index="39" loading="lazy" alt="Slide 39" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-40.jpg" class="slide-img" data-index="40" loading="lazy" alt="Slide 40" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-41.jpg" class="slide-img" data-index="41" loading="lazy" alt="Slide 41" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-42.jpg" class="slide-img" data-index="42" loading="lazy" alt="Slide 42" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-43.jpg" class="slide-img" data-index="43" loading="lazy" alt="Slide 43" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-44.jpg" class="slide-img" data-index="44" loading="lazy" alt="Slide 44" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-45.jpg" class="slide-img" data-index="45" loading="lazy" alt="Slide 45" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-46.jpg" class="slide-img" data-index="46" loading="lazy" alt="Slide 46" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-47.jpg" class="slide-img" data-index="47" loading="lazy" alt="Slide 47" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-48.jpg" class="slide-img" data-index="48" loading="lazy" alt="Slide 48" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-49.jpg" class="slide-img" data-index="49" loading="lazy" alt="Slide 49" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-50.jpg" class="slide-img" data-index="50" loading="lazy" alt="Slide 50" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-51.jpg" class="slide-img" data-index="51" loading="lazy" alt="Slide 51" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-52.jpg" class="slide-img" data-index="52" loading="lazy" alt="Slide 52" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-53.jpg" class="slide-img" data-index="53" loading="lazy" alt="Slide 53" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-54.jpg" class="slide-img" data-index="54" loading="lazy" alt="Slide 54" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-55.jpg" class="slide-img" data-index="55" loading="lazy" alt="Slide 55" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-56.jpg" class="slide-img" data-index="56" loading="lazy" alt="Slide 56" onclick="openModal(this.src)">
+                        <img src="formation-services/slide-57.jpg" class="slide-img" data-index="57" loading="lazy" alt="Slide 57" onclick="openModal(this.src)">
+                </div>
+                <div class="slide-thumbs" id="slide-thumbs">
+                        <img src="formation-services/slide-01.jpg" class="slide-thumb active" data-index="1" loading="lazy" alt="Miniature 1" onclick="goToSlide(1)">
+                        <img src="formation-services/slide-02.jpg" class="slide-thumb" data-index="2" loading="lazy" alt="Miniature 2" onclick="goToSlide(2)">
+                        <img src="formation-services/slide-03.jpg" class="slide-thumb" data-index="3" loading="lazy" alt="Miniature 3" onclick="goToSlide(3)">
+                        <img src="formation-services/slide-04.jpg" class="slide-thumb" data-index="4" loading="lazy" alt="Miniature 4" onclick="goToSlide(4)">
+                        <img src="formation-services/slide-05.jpg" class="slide-thumb" data-index="5" loading="lazy" alt="Miniature 5" onclick="goToSlide(5)">
+                        <img src="formation-services/slide-06.jpg" class="slide-thumb" data-index="6" loading="lazy" alt="Miniature 6" onclick="goToSlide(6)">
+                        <img src="formation-services/slide-07.jpg" class="slide-thumb" data-index="7" loading="lazy" alt="Miniature 7" onclick="goToSlide(7)">
+                        <img src="formation-services/slide-08.jpg" class="slide-thumb" data-index="8" loading="lazy" alt="Miniature 8" onclick="goToSlide(8)">
+                        <img src="formation-services/slide-09.jpg" class="slide-thumb" data-index="9" loading="lazy" alt="Miniature 9" onclick="goToSlide(9)">
+                        <img src="formation-services/slide-10.jpg" class="slide-thumb" data-index="10" loading="lazy" alt="Miniature 10" onclick="goToSlide(10)">
+                        <img src="formation-services/slide-11.jpg" class="slide-thumb" data-index="11" loading="lazy" alt="Miniature 11" onclick="goToSlide(11)">
+                        <img src="formation-services/slide-12.jpg" class="slide-thumb" data-index="12" loading="lazy" alt="Miniature 12" onclick="goToSlide(12)">
+                        <img src="formation-services/slide-13.jpg" class="slide-thumb" data-index="13" loading="lazy" alt="Miniature 13" onclick="goToSlide(13)">
+                        <img src="formation-services/slide-14.jpg" class="slide-thumb" data-index="14" loading="lazy" alt="Miniature 14" onclick="goToSlide(14)">
+                        <img src="formation-services/slide-15.jpg" class="slide-thumb" data-index="15" loading="lazy" alt="Miniature 15" onclick="goToSlide(15)">
+                        <img src="formation-services/slide-16.jpg" class="slide-thumb" data-index="16" loading="lazy" alt="Miniature 16" onclick="goToSlide(16)">
+                        <img src="formation-services/slide-17.jpg" class="slide-thumb" data-index="17" loading="lazy" alt="Miniature 17" onclick="goToSlide(17)">
+                        <img src="formation-services/slide-18.jpg" class="slide-thumb" data-index="18" loading="lazy" alt="Miniature 18" onclick="goToSlide(18)">
+                        <img src="formation-services/slide-19.jpg" class="slide-thumb" data-index="19" loading="lazy" alt="Miniature 19" onclick="goToSlide(19)">
+                        <img src="formation-services/slide-20.jpg" class="slide-thumb" data-index="20" loading="lazy" alt="Miniature 20" onclick="goToSlide(20)">
+                        <img src="formation-services/slide-21.jpg" class="slide-thumb" data-index="21" loading="lazy" alt="Miniature 21" onclick="goToSlide(21)">
+                        <img src="formation-services/slide-22.jpg" class="slide-thumb" data-index="22" loading="lazy" alt="Miniature 22" onclick="goToSlide(22)">
+                        <img src="formation-services/slide-23.jpg" class="slide-thumb" data-index="23" loading="lazy" alt="Miniature 23" onclick="goToSlide(23)">
+                        <img src="formation-services/slide-24.jpg" class="slide-thumb" data-index="24" loading="lazy" alt="Miniature 24" onclick="goToSlide(24)">
+                        <img src="formation-services/slide-25.jpg" class="slide-thumb" data-index="25" loading="lazy" alt="Miniature 25" onclick="goToSlide(25)">
+                        <img src="formation-services/slide-26.jpg" class="slide-thumb" data-index="26" loading="lazy" alt="Miniature 26" onclick="goToSlide(26)">
+                        <img src="formation-services/slide-27.jpg" class="slide-thumb" data-index="27" loading="lazy" alt="Miniature 27" onclick="goToSlide(27)">
+                        <img src="formation-services/slide-28.jpg" class="slide-thumb" data-index="28" loading="lazy" alt="Miniature 28" onclick="goToSlide(28)">
+                        <img src="formation-services/slide-29.jpg" class="slide-thumb" data-index="29" loading="lazy" alt="Miniature 29" onclick="goToSlide(29)">
+                        <img src="formation-services/slide-30.jpg" class="slide-thumb" data-index="30" loading="lazy" alt="Miniature 30" onclick="goToSlide(30)">
+                        <img src="formation-services/slide-31.jpg" class="slide-thumb" data-index="31" loading="lazy" alt="Miniature 31" onclick="goToSlide(31)">
+                        <img src="formation-services/slide-32.jpg" class="slide-thumb" data-index="32" loading="lazy" alt="Miniature 32" onclick="goToSlide(32)">
+                        <img src="formation-services/slide-33.jpg" class="slide-thumb" data-index="33" loading="lazy" alt="Miniature 33" onclick="goToSlide(33)">
+                        <img src="formation-services/slide-34.jpg" class="slide-thumb" data-index="34" loading="lazy" alt="Miniature 34" onclick="goToSlide(34)">
+                        <img src="formation-services/slide-35.jpg" class="slide-thumb" data-index="35" loading="lazy" alt="Miniature 35" onclick="goToSlide(35)">
+                        <img src="formation-services/slide-36.jpg" class="slide-thumb" data-index="36" loading="lazy" alt="Miniature 36" onclick="goToSlide(36)">
+                        <img src="formation-services/slide-37.jpg" class="slide-thumb" data-index="37" loading="lazy" alt="Miniature 37" onclick="goToSlide(37)">
+                        <img src="formation-services/slide-38.jpg" class="slide-thumb" data-index="38" loading="lazy" alt="Miniature 38" onclick="goToSlide(38)">
+                        <img src="formation-services/slide-39.jpg" class="slide-thumb" data-index="39" loading="lazy" alt="Miniature 39" onclick="goToSlide(39)">
+                        <img src="formation-services/slide-40.jpg" class="slide-thumb" data-index="40" loading="lazy" alt="Miniature 40" onclick="goToSlide(40)">
+                        <img src="formation-services/slide-41.jpg" class="slide-thumb" data-index="41" loading="lazy" alt="Miniature 41" onclick="goToSlide(41)">
+                        <img src="formation-services/slide-42.jpg" class="slide-thumb" data-index="42" loading="lazy" alt="Miniature 42" onclick="goToSlide(42)">
+                        <img src="formation-services/slide-43.jpg" class="slide-thumb" data-index="43" loading="lazy" alt="Miniature 43" onclick="goToSlide(43)">
+                        <img src="formation-services/slide-44.jpg" class="slide-thumb" data-index="44" loading="lazy" alt="Miniature 44" onclick="goToSlide(44)">
+                        <img src="formation-services/slide-45.jpg" class="slide-thumb" data-index="45" loading="lazy" alt="Miniature 45" onclick="goToSlide(45)">
+                        <img src="formation-services/slide-46.jpg" class="slide-thumb" data-index="46" loading="lazy" alt="Miniature 46" onclick="goToSlide(46)">
+                        <img src="formation-services/slide-47.jpg" class="slide-thumb" data-index="47" loading="lazy" alt="Miniature 47" onclick="goToSlide(47)">
+                        <img src="formation-services/slide-48.jpg" class="slide-thumb" data-index="48" loading="lazy" alt="Miniature 48" onclick="goToSlide(48)">
+                        <img src="formation-services/slide-49.jpg" class="slide-thumb" data-index="49" loading="lazy" alt="Miniature 49" onclick="goToSlide(49)">
+                        <img src="formation-services/slide-50.jpg" class="slide-thumb" data-index="50" loading="lazy" alt="Miniature 50" onclick="goToSlide(50)">
+                        <img src="formation-services/slide-51.jpg" class="slide-thumb" data-index="51" loading="lazy" alt="Miniature 51" onclick="goToSlide(51)">
+                        <img src="formation-services/slide-52.jpg" class="slide-thumb" data-index="52" loading="lazy" alt="Miniature 52" onclick="goToSlide(52)">
+                        <img src="formation-services/slide-53.jpg" class="slide-thumb" data-index="53" loading="lazy" alt="Miniature 53" onclick="goToSlide(53)">
+                        <img src="formation-services/slide-54.jpg" class="slide-thumb" data-index="54" loading="lazy" alt="Miniature 54" onclick="goToSlide(54)">
+                        <img src="formation-services/slide-55.jpg" class="slide-thumb" data-index="55" loading="lazy" alt="Miniature 55" onclick="goToSlide(55)">
+                        <img src="formation-services/slide-56.jpg" class="slide-thumb" data-index="56" loading="lazy" alt="Miniature 56" onclick="goToSlide(56)">
+                        <img src="formation-services/slide-57.jpg" class="slide-thumb" data-index="57" loading="lazy" alt="Miniature 57" onclick="goToSlide(57)">
+                </div>
+                <p class="text-sm mt-4 text-slate-500 dark:text-slate-400"><i class="fas fa-info-circle mr-1"></i> Cliquez sur une slide pour l'agrandir, ou utilisez les flèches du clavier ← →.</p>
+                <div class="text-center mt-6">
+                    <a href="formation-services/Onboarding Services - Holland Bikes.pdf" target="_blank" class="btn-hb"><i class="fas fa-file-pdf mr-2"></i> Télécharger le support complet (PDF)</a>
+                </div>
+            </div>
+        </section>
     </main>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         function showSection(id, el) {
@@ -1314,7 +1473,8 @@
             { name: 'Vélos mécaniques', section: 'reprise', anchor: 'rep-mecanique', keywords: 'mécanique musculaire' },
             { name: 'Click & Collect', section: 'clickcollect', keywords: 'click collect véligo upway' },
             { name: 'Véligo', section: 'clickcollect', anchor: 'cc-veligo', keywords: 'véligo' },
-            { name: 'Upway', section: 'clickcollect', anchor: 'cc-upway', keywords: 'upway' }
+            { name: 'Upway', section: 'clickcollect', anchor: 'cc-upway', keywords: 'upway' },
+            { name: 'Formation Services', section: 'formation', keywords: 'formation services onboarding slides présentation diaporama support' }
         ];
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
@@ -1401,6 +1561,43 @@
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', function(e){ if (e.target === modal) closeModal(); });
         document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && modal.style.display !== 'none') closeModal(); });
+    })();
+    </script>
+    <script>
+    (function(){
+        var viewport = document.getElementById('slide-viewport');
+        if (!viewport) return;
+        var slides = Array.from(viewport.querySelectorAll('.slide-img'));
+        var thumbs = Array.from(document.getElementById('slide-thumbs').querySelectorAll('.slide-thumb'));
+        var counter = document.getElementById('slide-counter');
+        var prevBtn = document.getElementById('slide-prev');
+        var nextBtn = document.getElementById('slide-next');
+        var current = 0;
+        function render() {
+            slides.forEach(function(img, i){ img.classList.toggle('active', i === current); });
+            thumbs.forEach(function(t, i){ t.classList.toggle('active', i === current); });
+            counter.textContent = (current + 1) + ' / ' + slides.length;
+            prevBtn.disabled = current === 0;
+            nextBtn.disabled = current === slides.length - 1;
+            var activeThumb = thumbs[current];
+            if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+        window.changeSlide = function(delta) {
+            var next = current + delta;
+            if (next < 0 || next >= slides.length) return;
+            current = next;
+            render();
+        };
+        window.goToSlide = function(index) {
+            current = Math.max(0, Math.min(slides.length - 1, index - 1));
+            render();
+        };
+        document.addEventListener('keydown', function(e) {
+            if (!document.getElementById('formation').classList.contains('active')) return;
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+        render();
     })();
     </script>
 </body>
